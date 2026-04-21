@@ -1,0 +1,23 @@
+{
+  "name": "web",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && node scripts/prerender.js",
+    "build:spa": "vite build",
+    "preview": "vite preview",
+    "deploy": "npm run build && netlify deploy --prod --dir=dist"
+  },
+  "dependencies": {
+    "d3": "^7.9.0",
+    "marked": "^18.0.0",
+    "qrcode": "^1.5.4",
+    "vue": "^3.5.32"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.5",
+    "vite": "^8.0.4"
+  }
+}

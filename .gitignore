@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.DS_Store
+Thumbs.db
+.env
+.env.*
+.venv/
+web/node_modules/
+web/dist/
+web/vite-preview.stdout.log
+web/vite-preview.stderr.log

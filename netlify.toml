@@ -1,0 +1,16 @@
+[build]
+  base = "web"
+  command = "npm run build"
+  publish = "web/dist"
+
+# HTML 页面禁用长期缓存，避免 SEO 元信息更新后读到旧版
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# 静态资源（带 hash 的 js/css/img）长期缓存
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
