@@ -1,7 +1,7 @@
 [build]
   base = "web"
   command = "npm run build"
-  publish = "web/dist"
+  publish = "dist"
 
 # HTML 页面禁用长期缓存，避免 SEO 元信息更新后读到旧版
 [[headers]]
