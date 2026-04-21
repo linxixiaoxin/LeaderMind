@@ -594,6 +594,20 @@ def main() -> None:
     core_concepts = structured["core_concepts"]
     scenarios = structured["canonical_scenarios"]
 
+    # 这两张卡现在已经在上游 N_notes 中补齐；这里同步把站点运行时的结构地图补成四结构版本，
+    # 这样内容总览、章节延伸阅读和图谱关系都会一起长出来。
+    book_skeleton["must_keep_concepts"] = dedupe_items(
+        ["四种心智结构", "以我为尊", *book_skeleton["must_keep_concepts"]]
+    )
+    if len(chapter_map) > 1:
+        chapter_map[1]["core_concepts"] = dedupe_items(
+            ["四种心智结构", "以我为尊", *chapter_map[1]["core_concepts"]]
+        )
+    if len(chapter_map) > 3:
+        chapter_map[3]["core_concepts"] = dedupe_items(
+            ["以我为尊", *chapter_map[3]["core_concepts"]]
+        )
+
     ensure_clean_dir(VAULT_DIR)
     ensure_clean_dir(WEB_VAULT_DIR)
     for folder in sorted(set(CATEGORY_DIR.values())):
@@ -647,7 +661,9 @@ def main() -> None:
 
     concept_specs = [
         NodeSpec("成人发展理论", "concept", source=N_NOTES_DIR / "成人发展理论.md"),
+        NodeSpec("四种心智结构", "concept", source=N_NOTES_DIR / "四种心智结构.md", aliases=["四种心智"]),
         NodeSpec("主体 - 客体转换", "concept", aliases=["主体客体转换"], tagline=concept_lookup["主体 - 客体转换"]["solves_what"]),
+        NodeSpec("以我为尊", "concept", source=N_NOTES_DIR / "以我为尊.md"),
         NodeSpec("规范主导", "concept", source=N_NOTES_DIR / "规范主导.md"),
         NodeSpec("自主导向", "concept", source=N_NOTES_DIR / "自主导向.md"),
         NodeSpec("内观自变", "concept", source=N_NOTES_DIR / "内观自变.md"),
@@ -747,9 +763,9 @@ def main() -> None:
 
     chapter_keywords = {
         chapter_ids[0]: {"成人发展理论", "主体 - 客体转换"},
-        chapter_ids[1]: {"规范主导", "自主导向", "内观自变"},
+        chapter_ids[1]: {"四种心智结构", "以我为尊", "规范主导", "自主导向", "内观自变"},
         chapter_ids[2]: {"结构与内容", "成长边际", "边际提问"},
-        chapter_ids[3]: {"发展型教练", "扩展式成长教练"},
+        chapter_ids[3]: {"发展型教练", "扩展式成长教练", "以我为尊"},
         chapter_ids[4]: {"转化性学习", "转化式专业发展", "跨层级空间"},
         chapter_ids[5]: {"转化性心智习惯"},
         chapter_ids[6]: {"反馈后学习", "发展性反馈"},
