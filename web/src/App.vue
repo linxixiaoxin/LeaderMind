@@ -119,6 +119,12 @@ const searchWrapRef = ref(null)
 const historyStack = ref([])
 const aliasMap = ref({})
 
+function resolveNodeId(nodeId) {
+  if (!nodeId) return null
+  if (FILE_MAP[nodeId]) return nodeId
+  return aliasMap.value[nodeId] || nodeId
+}
+
 function parseRoute(pathname) {
   const normalized = pathname.replace(/\/+$/, '') || '/'
   if (normalized === '/') return { view: 'home', nodeId: null }
@@ -142,12 +148,13 @@ function routeToUrl(targetView, nodeId) {
 
 function applyRouteFromUrl(replace = false) {
   const route = parseRoute(window.location.pathname)
+  const resolvedNodeId = route.view === 'reader' ? resolveNodeId(route.nodeId) : route.nodeId
   view.value = route.view
-  activeNode.value = route.nodeId
+  activeNode.value = resolvedNodeId
   if (replace) {
-    const nextUrl = routeToUrl(route.view, route.nodeId)
+    const nextUrl = routeToUrl(route.view, resolvedNodeId)
     if (nextUrl !== window.location.pathname) {
-      window.history.replaceState({ view: route.view, nodeId: route.nodeId }, '', nextUrl)
+      window.history.replaceState({ view: route.view, nodeId: resolvedNodeId }, '', nextUrl)
     }
   }
 }
@@ -163,7 +170,7 @@ function pushRoute(targetView, nodeId) {
 function onPopState() {
   const route = parseRoute(window.location.pathname)
   view.value = route.view
-  activeNode.value = route.nodeId
+  activeNode.value = route.view === 'reader' ? resolveNodeId(route.nodeId) : route.nodeId
   historyStack.value = []
 }
 
@@ -216,6 +223,7 @@ onMounted(async () => {
     }),
   )
   aliasMap.value = aliases
+  applyRouteFromUrl(true)
 })
 
 onUnmounted(() => {
@@ -241,10 +249,11 @@ function onGraphSelect(id) {
 }
 
 function pushReader(id) {
+  const resolvedId = resolveNodeId(id)
   historyStack.value.push({ view: view.value, nodeId: activeNode.value })
-  activeNode.value = id
+  activeNode.value = resolvedId
   view.value = 'reader'
-  pushRoute('reader', id)
+  pushRoute('reader', resolvedId)
 }
 
 function onSidebarSelect(id) {
@@ -252,7 +261,8 @@ function onSidebarSelect(id) {
 }
 
 function onNavigate(id) {
-  const exact = NODES.find((node) => node.id === id)
+  const resolvedId = resolveNodeId(id)
+  const exact = NODES.find((node) => node.id === resolvedId)
   if (exact) {
     pushReader(exact.id)
     return
@@ -262,7 +272,7 @@ function onNavigate(id) {
     pushReader(aliasTarget)
     return
   }
-  pushReader(id)
+  pushReader(resolvedId)
 }
 
 function onReaderClose() {

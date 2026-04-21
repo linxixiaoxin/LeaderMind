@@ -12,7 +12,7 @@
 
             <div class="hero-actions">
               <button class="primary-btn" @click="$emit('showGraph')">打开知识图谱</button>
-              <button class="ghost-btn" @click="$emit('navigate', SITE.recommendedPath[0])">从全书摘要开始</button>
+              <button class="ghost-btn" @click="$emit('navigate', SITE.recommendedPath[0])">从导读开始</button>
             </div>
           </div>
 
@@ -136,7 +136,6 @@
           <div>
             <div class="follow-overline">Follow Creator</div>
             <h2 class="drawer-title">{{ SITE.followTitle }}</h2>
-            <p class="drawer-desc">{{ SITE.followDescription }}</p>
           </div>
 
           <button class="drawer-close" @click="followOpen = false" aria-label="关闭关注面板">
@@ -144,41 +143,14 @@
           </button>
         </div>
 
-        <div class="drawer-brand">
-          <div class="brand-avatar">林</div>
-          <div class="brand-copy">
-            <div class="brand-name">{{ SITE.creatorName }}</div>
-            <div class="brand-note">公众号 / 小红书同名，点击打开关注信息</div>
-          </div>
+        <div class="drawer-intro">
+          <div class="brand-name">{{ SITE.creatorName }}</div>
+          <p class="drawer-desc">{{ SITE.followDescription }}</p>
         </div>
 
         <div class="drawer-list">
           <article v-for="channel in SITE.socialChannels" :key="channel.id" class="follow-card">
-            <div class="follow-card-top">
-              <span class="follow-channel">{{ channel.label }}</span>
-              <span v-if="channel.accountId" class="follow-id">账号号 {{ channel.accountId }}</span>
-            </div>
-
-            <h3 class="follow-name">{{ channel.name }}</h3>
-            <p class="follow-card-desc">{{ channel.description }}</p>
-
-            <div class="follow-actions">
-              <button class="follow-btn primary" @click="copyText(channel.copyNameValue, `${channel.id}-name`)">
-                {{ copiedKey === `${channel.id}-name` ? '已复制' : channel.copyNameLabel }}
-              </button>
-              <button
-                v-if="channel.copyIdValue"
-                class="follow-btn ghost"
-                @click="copyText(channel.copyIdValue, `${channel.id}-id`)"
-              >
-                {{ copiedKey === `${channel.id}-id` ? '已复制' : channel.copyIdLabel }}
-              </button>
-            </div>
-
-            <button class="follow-open" @click="openChannel(channel.id)">
-              <span>打开{{ channel.label }}关注信息</span>
-              <span class="follow-open-arrow">↗</span>
-            </button>
+            <div class="follow-channel">{{ channel.label }}</div>
 
             <div class="follow-preview">
               <img
@@ -189,7 +161,6 @@
                 @error="markQrBroken(channel.id)"
               />
               <div v-else class="follow-qr-fallback">
-                <div class="fallback-kicker">扫码位已预留</div>
                 <div class="fallback-text">{{ channel.fallbackText }}</div>
               </div>
             </div>
@@ -207,7 +178,6 @@ import { HOME_SECTIONS, SITE } from '../data/graphData.js'
 defineEmits(['navigate', 'showGraph'])
 
 const mounted = ref(false)
-const copiedKey = ref('')
 const brokenQrIds = ref(new Set())
 const followOpen = ref(false)
 
@@ -225,32 +195,6 @@ function qrSrc(path) {
   if (!path) return ''
   const version = SITE.assetVersion ? `?v=${SITE.assetVersion}` : ''
   return `${path}${version}`
-}
-
-function openChannel(channelId) {
-  const channel = SITE.socialChannels.find((item) => item.id === channelId)
-  if (!channel) return
-  if (channel.qrImage && !brokenQrIds.value.has(channelId)) {
-    window.open(qrSrc(channel.qrImage), '_blank', 'noopener,noreferrer')
-    return
-  }
-  if (channel.copyNameValue) {
-    copyText(channel.copyNameValue, `${channel.id}-name`)
-  }
-}
-
-async function copyText(value, key) {
-  try {
-    await navigator.clipboard.writeText(value)
-    copiedKey.value = key
-    window.setTimeout(() => {
-      if (copiedKey.value === key) {
-        copiedKey.value = ''
-      }
-    }, 1800)
-  } catch {
-    copiedKey.value = ''
-  }
 }
 </script>
 
@@ -502,7 +446,7 @@ async function copyText(value, key) {
 }
 
 .follow-card {
-  padding: 22px;
+  padding: 18px;
   border-radius: 24px;
   border: 1px solid rgba(32, 79, 103, 0.12);
   background: rgba(255, 255, 255, 0.82);
@@ -510,6 +454,8 @@ async function copyText(value, key) {
   display: flex;
   flex-direction: column;
   gap: 14px;
+  align-items: center;
+  text-align: center;
 }
 
 .follow-card-top {
@@ -523,6 +469,7 @@ async function copyText(value, key) {
 .follow-channel {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   padding: 5px 10px;
   border-radius: 999px;
   background: rgba(32, 79, 103, 0.1);
@@ -621,8 +568,8 @@ async function copyText(value, key) {
   color: var(--text-primary);
 }
 
-.drawer-desc,
-.follow-card-desc {
+.drawer-desc {
+  margin-top: 8px;
   color: var(--text-secondary);
   font-size: 14px;
   line-height: 1.8;
@@ -641,124 +588,38 @@ async function copyText(value, key) {
   flex-shrink: 0;
 }
 
-.drawer-brand {
-  display: flex;
-  align-items: center;
-  gap: 14px;
+.drawer-intro {
   margin-bottom: 18px;
-  padding: 14px 16px;
+  padding: 18px 16px;
   border-radius: 20px;
   border: 1px solid rgba(32, 79, 103, 0.1);
   background: rgba(255, 255, 255, 0.74);
-}
-
-.brand-avatar {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: var(--brand);
-  color: var(--text-on-dark);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-serif);
-  font-size: 22px;
-}
-
-.brand-copy {
-  min-width: 0;
+  text-align: center;
 }
 
 .brand-name {
   font-family: var(--font-serif);
-  font-size: 22px;
+  font-size: 24px;
   color: var(--text-primary);
-}
-
-.brand-note {
-  margin-top: 4px;
-  font-size: 12px;
-  line-height: 1.7;
-  color: var(--text-muted);
 }
 
 .drawer-list {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px;
-}
-
-.follow-name {
-  font-family: var(--font-serif);
-  font-size: 26px;
-  line-height: 1.18;
-  color: var(--text-primary);
-}
-
-.follow-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.follow-btn {
-  border-radius: 999px;
-  padding: 10px 14px;
-  font-size: 12px;
-  cursor: pointer;
-  transition: transform 0.16s ease, border-color 0.16s ease, background 0.16s ease, color 0.16s ease;
-}
-
-.follow-btn:hover {
-  transform: translateY(-1px);
-}
-
-.follow-btn.primary {
-  border: 1px solid transparent;
-  background: var(--brand);
-  color: var(--text-on-dark);
-}
-
-.follow-btn.ghost {
-  border: 1px solid rgba(32, 79, 103, 0.18);
-  background: rgba(255, 255, 255, 0.72);
-  color: var(--brand);
-}
-
-.follow-open {
-  width: 100%;
-  border: 1px solid rgba(32, 79, 103, 0.14);
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.72);
-  padding: 12px 14px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  color: var(--brand);
-  font-size: 13px;
-  cursor: pointer;
-}
-
-.follow-open:hover {
-  border-color: rgba(32, 79, 103, 0.26);
-}
-
-.follow-open-arrow {
-  font-size: 16px;
 }
 
 .follow-preview {
   display: flex;
   justify-content: center;
+  width: 100%;
 }
 
 .follow-qr {
   display: block;
   width: 100%;
-  max-width: 180px;
   aspect-ratio: 1 / 1;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 18px;
   border: 1px solid rgba(32, 79, 103, 0.1);
   background: #fff;
@@ -766,29 +627,21 @@ async function copyText(value, key) {
 
 .follow-qr-fallback {
   width: 100%;
-  min-height: 180px;
+  aspect-ratio: 1 / 1;
   border-radius: 20px;
   border: 1px dashed rgba(32, 79, 103, 0.18);
   background:
     linear-gradient(135deg, rgba(32, 79, 103, 0.08) 0%, rgba(191, 111, 63, 0.08) 100%),
     rgba(255, 255, 255, 0.78);
   display: flex;
-  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  gap: 8px;
   padding: 16px;
   text-align: center;
 }
 
-.fallback-kicker {
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  color: var(--text-muted);
-  text-transform: uppercase;
-}
-
 .fallback-text {
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.7;
   color: var(--text-secondary);
 }
@@ -1154,7 +1007,6 @@ async function copyText(value, key) {
     font-size: 28px;
   }
 
-  .follow-name,
   .brand-name {
     font-size: 22px;
   }

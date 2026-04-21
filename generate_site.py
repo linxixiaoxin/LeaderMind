@@ -90,6 +90,12 @@ class NodeSpec:
     body: str = ""
 
 
+@dataclass
+class MarkdownSection:
+    title: str
+    body: str
+
+
 def read_text(path: Path) -> str:
     return path.read_text(encoding="utf-8")
 
@@ -198,6 +204,236 @@ def numbered_list(items: list[str]) -> str:
 
 def section(title: str, body: str) -> str:
     return f"## {title}\n\n{body.strip()}"
+
+
+def compact_blank_lines(text: str) -> str:
+    normalized: list[str] = []
+    previous_blank = True
+    for raw in text.splitlines():
+        line = raw.rstrip()
+        if line.strip():
+            normalized.append(line)
+            previous_blank = False
+            continue
+        if not previous_blank:
+            normalized.append("")
+        previous_blank = True
+    while normalized and not normalized[-1].strip():
+        normalized.pop()
+    return "\n".join(normalized).strip()
+
+
+def clean_source_body(markdown: str) -> str:
+    cleaned: list[str] = []
+    skip_quote_block = False
+
+    for raw in strip_first_heading(markdown).splitlines():
+        stripped = raw.strip()
+
+        if skip_quote_block:
+            if stripped.startswith(">") or not stripped:
+                continue
+            skip_quote_block = False
+
+        if re.match(r"^>\s*提取说明", stripped):
+            skip_quote_block = True
+            continue
+
+        if re.match(r"^>\s*(创建时间|最后更新时间)\s*[:：]", stripped):
+            continue
+
+        if stripped.startswith("这是一张 ") and ("N / Note" in stripped or "K / Knowledge" in stripped):
+            continue
+
+        cleaned.append(raw)
+
+    return compact_blank_lines("\n".join(cleaned))
+
+
+def parse_markdown_sections(markdown: str) -> tuple[str, list[MarkdownSection]]:
+    intro_lines: list[str] = []
+    sections: list[MarkdownSection] = []
+    current_title: str | None = None
+    current_lines: list[str] = []
+
+    for line in compact_blank_lines(markdown).splitlines():
+        if line.startswith("## "):
+            if current_title is None:
+                intro = compact_blank_lines("\n".join(intro_lines))
+            else:
+                sections.append(MarkdownSection(current_title, compact_blank_lines("\n".join(current_lines))))
+            current_title = line[3:].strip()
+            current_lines = []
+            continue
+
+        if current_title is None:
+            intro_lines.append(line)
+        else:
+            current_lines.append(line)
+
+    if current_title is not None:
+        sections.append(MarkdownSection(current_title, compact_blank_lines("\n".join(current_lines))))
+        intro = compact_blank_lines("\n".join(intro_lines))
+    else:
+        intro = compact_blank_lines("\n".join(intro_lines))
+
+    return intro, sections
+
+
+def parse_subsections(markdown: str) -> list[MarkdownSection]:
+    sections: list[MarkdownSection] = []
+    current_title: str | None = None
+    current_lines: list[str] = []
+
+    for line in compact_blank_lines(markdown).splitlines():
+        if line.startswith("### "):
+            if current_title is not None:
+                sections.append(MarkdownSection(current_title, compact_blank_lines("\n".join(current_lines))))
+            current_title = line[4:].strip()
+            current_lines = []
+            continue
+        if current_title is not None:
+            current_lines.append(line)
+
+    if current_title is not None:
+        sections.append(MarkdownSection(current_title, compact_blank_lines("\n".join(current_lines))))
+
+    return sections
+
+
+def find_section_body(sections: list[MarkdownSection], *keywords: str) -> str:
+    for keyword in keywords:
+        for item in sections:
+            if keyword == item.title or keyword in item.title:
+                return item.body
+    return ""
+
+
+def find_subsection_body(markdown: str, keyword: str) -> str:
+    for item in parse_subsections(markdown):
+        if keyword == item.title or keyword in item.title:
+            return item.body
+    return ""
+
+
+def merge_bodies(*parts: str) -> str:
+    values = [part.strip() for part in parts if part and part.strip()]
+    return "\n\n".join(values)
+
+
+def dedupe_items(items: list[str]) -> list[str]:
+    seen: set[str] = set()
+    ordered: list[str] = []
+    for item in items:
+        value = item.strip()
+        if not value or value in seen:
+            continue
+        seen.add(value)
+        ordered.append(value)
+    return ordered
+
+
+def clean_subsection_title(title: str) -> str:
+    cleaned = title.strip()
+    cleaned = re.sub(r"^(?:方法\s*/\s*动作|概念|案例|比喻|小节)\s*\d+\s*[：:]\s*", "", cleaned)
+    return cleaned.strip()
+
+
+def prune_internal_bullets(markdown: str) -> str:
+    hidden_prefixes = (
+        "类型：",
+        "when_to_use：",
+        "expected_effect：",
+        "limits：",
+        "case_type：",
+        "scene_description：",
+        "what_it_proves：",
+        "linked_concepts：",
+        "visual_elements：",
+        "default_usage：",
+        "metaphor_type：",
+        "metaphor_summary：",
+    )
+    kept_lines = []
+    for raw in markdown.splitlines():
+        stripped = raw.strip()
+        if stripped.startswith("- ") and any(stripped[2:].startswith(prefix) for prefix in hidden_prefixes):
+            continue
+        kept_lines.append(raw)
+    return compact_blank_lines("\n".join(kept_lines))
+
+
+def render_subsections(markdown: str, max_subsections: int) -> str:
+    sections = parse_subsections(markdown)
+    if not sections:
+        return prune_internal_bullets(markdown)
+
+    chunks = []
+    for item in sections[:max_subsections]:
+        title = clean_subsection_title(item.title)
+        if item.body:
+            chunks.append(f"### {title}\n\n{prune_internal_bullets(item.body)}")
+    return "\n\n".join(chunks).strip()
+
+
+def parse_labeled_bullets(markdown: str) -> dict[str, str]:
+    values: dict[str, str] = {}
+    for raw in markdown.splitlines():
+        stripped = raw.strip()
+        if not stripped.startswith("- "):
+            continue
+        item = stripped[2:].strip()
+        if "：" not in item:
+            continue
+        key, value = item.split("：", 1)
+        values[key.strip()] = value.strip()
+    return values
+
+
+def top_level_numbered_items(markdown: str) -> list[str]:
+    items: list[str] = []
+    for raw in markdown.splitlines():
+        stripped = raw.strip()
+        if not re.match(r"^\d+\.\s+", stripped):
+            continue
+        items.append(plain_text(re.sub(r"^\d+\.\s*", "", stripped)))
+    return items
+
+
+def top_level_bullet_items(markdown: str) -> list[str]:
+    items: list[str] = []
+    for raw in prune_internal_bullets(markdown).splitlines():
+        stripped = raw.strip()
+        if not stripped.startswith("- "):
+            continue
+        items.append(stripped[2:].strip())
+    return items
+
+
+def collect_wikilinks(*bodies: str, limit: int | None = None) -> list[str]:
+    links: list[str] = []
+    for body in bodies:
+        links.extend(re.findall(r"\[\[([^\]]+)\]\]", body))
+    unique = dedupe_items(links)
+    if limit is None:
+        return unique
+    return unique[:limit]
+
+
+def normalize_blurb(text: str, fallback: str = "", remove_prefixes: list[str] | None = None) -> str:
+    value = plain_text(text) if text else ""
+    for label in ["核心问题", "一句话", "本章核心问题", "作者介绍"]:
+        value = re.sub(rf"^{re.escape(label)}\s*[:：]\s*", "", value)
+    for prefix in remove_prefixes or []:
+        value = re.sub(rf"^{re.escape(prefix)}\s*[:：]\s*", "", value)
+    return value.strip() or fallback.strip()
+
+
+def strip_hidden_lines(text: str, hidden_ids: set[str]) -> str:
+    cleaned = text
+    for hidden_id in hidden_ids:
+        cleaned = re.sub(rf"^.*\[\[{re.escape(hidden_id)}\]\].*$", "", cleaned, flags=re.MULTILINE)
+    return compact_blank_lines(cleaned)
 
 
 def chapter_source(index: int, title: str) -> Path:
@@ -353,6 +589,7 @@ def main() -> None:
     book = structured["book_metadata"]
     chapter_map = structured["chapter_map"]
     book_skeleton = structured["book_skeleton"]
+    part_structure = structured["part_structure"]
     logic_chain = structured["logic_chain"]
     core_concepts = structured["core_concepts"]
     scenarios = structured["canonical_scenarios"]
@@ -364,6 +601,18 @@ def main() -> None:
         (WEB_VAULT_DIR / folder).mkdir(parents=True, exist_ok=True)
 
     concept_lookup = {item["name"]: item for item in core_concepts}
+    overview_id = "全书导读"
+    overview_aliases = ["全书摘要", f"《{book['title']}》全书摘要"]
+    logic_id = "全书脉络"
+    logic_aliases = ["全书论证链"]
+    content_map_id = "核心内容总览"
+    content_map_aliases = ["K卡N卡总表", "整本书K卡_N卡总表", "整本书K卡/N卡总表"]
+    content_direction_id = "内容拆解方向"
+    content_direction_aliases = ["内容选题角度", f"《{book['title']}》选题角度"]
+    visual_direction_id = "图解表达线索"
+    visual_direction_aliases = ["视觉表达钩子", f"《{book['title']}》视觉钩子"]
+
+    hidden_web_ids = {content_direction_id, visual_direction_id}
 
     theme_specs = [
         NodeSpec("领导者的意识进化", "topic", source=K_BOOK_DIR / "领导者的意识进化.md", aliases=["领导者的心智进化"]),
@@ -374,11 +623,11 @@ def main() -> None:
         NodeSpec("工作现场如何变成发展容器", "topic", source=K_THEME_DIR / "工作现场如何变成发展容器.md"),
     ]
     topic_specs = [
-        NodeSpec("全书摘要", "topic", tagline=book["core_one_liner"], source=BOOK_ASSETS_DIR / "全书摘要.md", aliases=[f"《{book['title']}》全书摘要"]),
-        NodeSpec("全书论证链", "topic", tagline="用 10 步把这本书从复杂世界的领导难题，推进到工作即成长场。"),
-        NodeSpec("K卡N卡总表", "topic", tagline="把这本书最值得复用的 K 卡与 N 卡收成一张总路由表。", source=BOOK_ASSETS_DIR / "整本书K卡_N卡总表.md", aliases=["整本书K卡_N卡总表", "整本书K卡/N卡总表"]),
-        NodeSpec("内容选题角度", "topic", tagline="把全书拆成适合做内容、课程和表达的高价值切口。", source=BOOK_ASSETS_DIR / "选题角度.md", aliases=[f"《{book['title']}》选题角度"]),
-        NodeSpec("视觉表达钩子", "topic", tagline="把抽象心智结构翻成更适合图解与页面表达的视觉对象。", source=BOOK_ASSETS_DIR / "视觉钩子.md", aliases=[f"《{book['title']}》视觉钩子"]),
+        NodeSpec(overview_id, "topic", tagline=book["core_one_liner"], source=BOOK_ASSETS_DIR / "全书摘要.md", aliases=overview_aliases),
+        NodeSpec(logic_id, "topic", tagline="用 10 步把这本书从复杂世界的领导难题，推进到工作即成长场。", aliases=logic_aliases),
+        NodeSpec(content_map_id, "topic", tagline="把这本书最值得留下的主题、概念和方法收成一张总览图。", source=BOOK_ASSETS_DIR / "整本书K卡_N卡总表.md", aliases=content_map_aliases),
+        NodeSpec(content_direction_id, "topic", tagline="把全书拆成适合做内容、课程和表达的高价值切口。", source=BOOK_ASSETS_DIR / "选题角度.md", aliases=content_direction_aliases),
+        NodeSpec(visual_direction_id, "topic", tagline="把抽象心智结构翻成更适合图解与页面表达的视觉对象。", source=BOOK_ASSETS_DIR / "视觉钩子.md", aliases=visual_direction_aliases),
     ]
 
     chapter_specs: list[NodeSpec] = []
@@ -468,7 +717,7 @@ def main() -> None:
         {
             "level": "LV.0",
             "stage": "总纲入口",
-            "node": "全书摘要",
+            "node": overview_id,
             "image": "/chapter-images/overview.jpg",
             "summary": book["core_one_liner"],
             "bridgeToNext": chapter_map[0]["key_question"],
@@ -538,11 +787,571 @@ def main() -> None:
 
     raw_bodies: dict[str, str] = {}
 
+    def _legacy_public_links_section(*bodies: str, limit: int = 5) -> str:
+        links = collect_wikilinks(*bodies, limit=limit)
+        if not links:
+            return ""
+        return section("延伸阅读", bullet_list([f"[[{name}]]" for name in links]))
+
+    def _legacy_build_public_topic_body(spec: NodeSpec, cleaned_body: str) -> str:
+        intro, sections = parse_markdown_sections(cleaned_body)
+        main_questions = find_section_body(sections, "主问题链")
+        answers = find_section_body(sections, "这张主题页回答什么")
+        judgments = find_section_body(sections, "用于调用的核心判断")
+        logic = find_section_body(sections, "核心逻辑")
+        mistakes = find_section_body(sections, "常见误判")
+
+        parts = [f"# {spec.id}"]
+        blurb = normalize_blurb(intro, spec.tagline, remove_prefixes=[spec.id])
+        if blurb:
+            parts.append(f"> {blurb}")
+
+        overview = answers or main_questions
+        if overview:
+            parts.append(section("这篇内容在讲什么", overview))
+        if judgments:
+            parts.append(section("核心观点", judgments))
+        if logic:
+            parts.append(section("为什么这很重要", logic))
+        if mistakes:
+            parts.append(section("常见误区", mistakes))
+
+        links = public_links_section(
+            find_section_body(sections, "建议阅读路径"),
+            find_section_body(sections, "先看什么，再看什么"),
+            find_section_body(sections, "概念入口"),
+            find_section_body(sections, "配套问题页"),
+            limit=5,
+        )
+        if links:
+            parts.append(links)
+
+        return "\n\n".join(part for part in parts if part.strip())
+
+    def _legacy_build_public_concept_body(spec: NodeSpec, cleaned_body: str) -> str:
+        intro, sections = parse_markdown_sections(cleaned_body)
+        definition = find_section_body(sections, "核心定义")
+        judgments = find_section_body(sections, "可直接调用的判断")
+        solves = find_section_body(sections, "这张卡解决什么")
+        situations = find_section_body(sections, "进入哪些问题场景")
+        decision_rule = find_subsection_body(find_section_body(sections, "判断案例"), "一个简单判断法")
+        if not decision_rule:
+            decision_rule = find_subsection_body(find_section_body(sections, "典型案例"), "一个简单判断法")
+        if not decision_rule:
+            decision_rule = render_subsections(merge_bodies(find_section_body(sections, "判断案例"), find_section_body(sections, "典型案例")), 2)
+        actions = render_subsections(find_section_body(sections, "场景动作模板"), 3)
+        mistakes = find_section_body(sections, "红线边界")
+
+        parts = [f"# {spec.id}"]
+        blurb = normalize_blurb(definition or intro, spec.tagline, remove_prefixes=[spec.id])
+        if blurb:
+            parts.append(f"> {blurb}")
+        if judgments:
+            parts.append(section("核心观点", judgments))
+        if solves:
+            parts.append(section("这个概念在解决什么", solves))
+        if situations:
+            parts.append(section("你会在什么情况下遇到它", situations))
+        if decision_rule:
+            parts.append(section("怎么判断你需要它", decision_rule))
+        if actions:
+            parts.append(section("你可以怎么使用", actions))
+        if mistakes:
+            parts.append(section("使用边界", mistakes))
+
+        links = public_links_section(
+            find_section_body(sections, "相关概念"),
+            find_section_body(sections, "关联主题页"),
+            limit=5,
+        )
+        if links:
+            parts.append(links)
+
+        return "\n\n".join(part for part in parts if part.strip())
+
+    def _legacy_build_public_method_body(spec: NodeSpec, cleaned_body: str) -> str:
+        intro, sections = parse_markdown_sections(cleaned_body)
+        definition = find_section_body(sections, "核心定义")
+        judgments = find_section_body(sections, "可直接调用的判断")
+        solves = find_section_body(sections, "这张卡解决什么")
+        situations = find_section_body(sections, "进入哪些问题场景")
+        cases = render_subsections(merge_bodies(find_section_body(sections, "典型案例"), find_section_body(sections, "判断案例")), 2)
+        actions = render_subsections(find_section_body(sections, "场景动作模板"), 3)
+        mistakes = find_section_body(sections, "红线边界")
+
+        parts = [f"# {spec.id}"]
+        blurb = normalize_blurb(definition or intro, spec.tagline, remove_prefixes=[spec.id])
+        if blurb:
+            parts.append(f"> {blurb}")
+        if situations:
+            parts.append(section("什么时候适合用", situations))
+        if solves:
+            parts.append(section("这能解决什么问题", solves))
+        if judgments:
+            parts.append(section("用好它的关键", judgments))
+        if actions:
+            parts.append(section("可以怎么做", actions))
+        if cases:
+            parts.append(section("一个常见例子", cases))
+        if mistakes:
+            parts.append(section("常见错误", mistakes))
+
+        links = public_links_section(
+            find_section_body(sections, "相关概念"),
+            find_section_body(sections, "关联主题页"),
+            limit=5,
+        )
+        if links:
+            parts.append(links)
+
+        return "\n\n".join(part for part in parts if part.strip())
+
+    def _legacy_build_public_chapter_body(spec: NodeSpec, cleaned_body: str) -> str:
+        intro, sections = parse_markdown_sections(cleaned_body)
+        position = parse_labeled_bullets(find_section_body(sections, "章节定位卡"))
+        takeaways = top_level_numbered_items(find_section_body(sections, "章节内部推进链"))[:5]
+        method_body = render_subsections(find_section_body(sections, "方法、流程与判断动作"), 1)
+
+        chapter_index = chapter_ids.index(spec.id)
+        chapter = chapter_map[chapter_index]
+        related_links = [
+            name_to_node.get(name, name)
+            for name in chapter["core_concepts"]
+            if name_to_node.get(name, name) in spec_by_id
+        ]
+        related_links.extend(scenario_to_method_ids(chapter["title"] + chapter["key_question"], chapter["core_concepts"]))
+        if chapter_index > 0:
+            related_links.append(chapter_ids[chapter_index - 1])
+        if chapter_index < len(chapter_ids) - 1:
+            related_links.append(chapter_ids[chapter_index + 1])
+        related_links = dedupe_items([item for item in related_links if item in spec_by_id])[:5]
+
+        parts = [f"# {spec.id}"]
+        blurb = normalize_blurb(
+            position.get("本章核心问题", "") or intro,
+            spec.tagline,
+            remove_prefixes=[spec.id],
+        )
+        if blurb:
+            parts.append(f"> {blurb}")
+
+        overview_items = [
+            position.get("本章承担的作用", ""),
+            position.get("一句话章结构", ""),
+            position.get("本章最终收口", ""),
+        ]
+        if any(item for item in overview_items):
+            parts.append(section("这一章在讲什么", bullet_list(overview_items)))
+
+        if takeaways:
+            parts.append(section("这一章最重要的收获", numbered_list(takeaways)))
+
+        why_it_matters = [
+            position.get("本章在全书中的位置", ""),
+            position.get("本章与上一章的关系", ""),
+            position.get("本章与下一章的关系", ""),
+        ]
+        if any(item for item in why_it_matters):
+            parts.append(section("为什么这一章关键", bullet_list(why_it_matters)))
+
+        if method_body:
+            parts.append(section("你可以带走的一个方法", method_body))
+
+        if related_links:
+            parts.append(section("延伸阅读", bullet_list([f"[[{name}]]" for name in related_links])))
+
+        return "\n\n".join(part for part in parts if part.strip())
+
+    def public_links_section(*bodies: str, limit: int = 5) -> str:
+        links = collect_wikilinks(*bodies, limit=limit)
+        if not links:
+            return ""
+        return section("延伸阅读", bullet_list([f"[[{name}]]" for name in links]))
+
+    def node_summary_items(node_ids: list[str], limit: int = 5) -> list[str]:
+        items: list[str] = []
+        for node_id in dedupe_items(node_ids):
+            linked = spec_by_id.get(node_id)
+            if not linked:
+                continue
+            tagline = normalize_blurb(linked.tagline, remove_prefixes=[node_id])
+            items.append(f"[[{node_id}]]：{tagline}" if tagline else f"[[{node_id}]]")
+            if len(items) >= limit:
+                break
+        return items
+
+    def build_public_topic_body(spec: NodeSpec, cleaned_body: str) -> str:
+        intro, sections = parse_markdown_sections(cleaned_body)
+        main_questions = find_section_body(sections, "主问题链")
+        answers = find_section_body(sections, "这张主题页回答什么")
+        judgments = find_section_body(sections, "用于调用的核心判断")
+        logic = find_section_body(sections, "核心逻辑")
+        mistakes = find_section_body(sections, "常见误读")
+        quick_start = find_section_body(sections, "快速进入")
+        reading_path = merge_bodies(
+            find_section_body(sections, "建议阅读路径"),
+            find_section_body(sections, "先看什么，再看什么"),
+            find_section_body(sections, "概念入口"),
+        )
+        next_topics = merge_bodies(
+            find_section_body(sections, "关联主题页"),
+            find_section_body(sections, "配套问题页"),
+            find_section_body(sections, "可直接外溢的选题"),
+        )
+
+        parts = [f"# {spec.id}"]
+        blurb = normalize_blurb(intro, spec.tagline, remove_prefixes=[spec.id])
+        if blurb:
+            parts.append(f"> {blurb}")
+
+        overview = answers or main_questions
+        if overview:
+            parts.append(section("这篇内容在讲什么", overview))
+        if judgments:
+            parts.append(section("核心观点", judgments))
+        if logic:
+            parts.append(section("为什么这很重要", logic))
+        if quick_start:
+            parts.append(section("先抓住这几个点", prune_internal_bullets(quick_start)))
+        if mistakes:
+            parts.append(section("常见误区", mistakes))
+        if reading_path:
+            parts.append(section("可以从哪里进入", prune_internal_bullets(reading_path)))
+        if next_topics:
+            parts.append(section("还可以往哪几条线展开", prune_internal_bullets(next_topics)))
+
+        links = public_links_section(
+            find_section_body(sections, "建议阅读路径"),
+            find_section_body(sections, "先看什么，再看什么"),
+            find_section_body(sections, "概念入口"),
+            find_section_body(sections, "关联主题页"),
+            find_section_body(sections, "配套问题页"),
+            limit=6,
+        )
+        if links:
+            parts.append(links)
+
+        return "\n\n".join(part for part in parts if part.strip())
+
+    def build_public_overview_body(spec: NodeSpec, cleaned_body: str) -> str:
+        intro, sections = parse_markdown_sections(cleaned_body)
+        question_card = parse_labeled_bullets(find_section_body(sections, "这本书到底在解决什么问题"))
+        key_relations = top_level_numbered_items(find_section_body(sections, "全书主逻辑链"))[:5]
+
+        parts = [f"# {spec.id}"]
+        blurb = normalize_blurb(
+            question_card.get("一句话总论点", "") or intro,
+            spec.tagline,
+            remove_prefixes=[spec.id],
+        )
+        if blurb:
+            parts.append(f"> {blurb}")
+
+        parts.append(
+            section(
+                "这本书在回答什么",
+                bullet_list(
+                    [
+                        question_card.get("这本书最关键的转向", ""),
+                        question_card.get("这本书最独特的地方", ""),
+                        book_skeleton["main_problem"],
+                    ]
+                ),
+            )
+        )
+        parts.append(
+            section(
+                "全书怎么展开",
+                bullet_list([f"{item['part']}《{item['title']}》：{item['function']}" for item in part_structure]),
+            )
+        )
+        if key_relations:
+            parts.append(section("先抓住的关键推进", numbered_list(key_relations)))
+        parts.append(
+            section(
+                "适合从哪里开始读",
+                bullet_list(
+                    [
+                        f"[[{logic_id}]]：适合先看整本书的问题链是怎么推进的。",
+                        "[[领导者的意识进化]]：适合先拿到整本书的主题版总览。",
+                        f"[[{chapter_ids[0]}]]：适合先回到理论起点，建立总透镜。",
+                        f"[[{chapter_ids[-1]}]]：适合先看这本书最后怎样落到组织与工作现场。",
+                    ]
+                ),
+            )
+        )
+        parts.append(
+            section(
+                "继续展开",
+                bullet_list(
+                    [
+                        f"[[{logic_id}]]",
+                        "[[领导者的意识进化]]",
+                        f"[[{chapter_ids[0]}]]",
+                        f"[[{chapter_ids[-1]}]]",
+                    ]
+                ),
+            )
+        )
+
+        return "\n\n".join(part for part in parts if part.strip())
+
+    def build_public_content_map_body(spec: NodeSpec, cleaned_body: str) -> str:
+        must_keep_nodes = [
+            canonical
+            for canonical in (name_to_node.get(name) for name in book_skeleton["must_keep_concepts"])
+            if canonical in spec_by_id
+        ]
+
+        parts = [
+            f"# {spec.id}",
+            f"> {spec.tagline}",
+            section(
+                "先抓住这几张总览页",
+                bullet_list(
+                    node_summary_items(
+                        [overview_id, logic_id, "领导者的意识进化", "复杂世界中的领导者成长"],
+                        limit=4,
+                    )
+                ),
+            ),
+            section("最值得优先看的主题", bullet_list(node_summary_items(theme_ids, limit=5))),
+            section("关键概念", bullet_list(node_summary_items(must_keep_nodes or concept_ids, limit=6))),
+            section("关键方法", bullet_list(node_summary_items(method_ids, limit=5))),
+            section("高代入场景入口", bullet_list(node_summary_items(scenario_ids, limit=4))),
+            section(
+                "站内入口",
+                bullet_list(
+                    [
+                        f"[[{overview_id}]]：先拿到整本书总览。",
+                        f"[[{content_direction_id}]]：继续拆成内容方向。",
+                        f"[[{visual_direction_id}]]：继续拆成图解与页面表达。",
+                    ]
+                ),
+            ),
+        ]
+
+        return "\n\n".join(part for part in parts if part.strip())
+
+    def build_public_content_direction_body(spec: NodeSpec, cleaned_body: str) -> str:
+        intro, sections = parse_markdown_sections(cleaned_body)
+        top_outline = render_subsections(find_section_body(sections, "总纲型选题"), 2)
+        concept_tracks = render_subsections(find_section_body(sections, "概念卡"), 2)
+        method_tracks = render_subsections(find_section_body(sections, "方法卡"), 2)
+        org_tracks = render_subsections(find_section_body(sections, "组织实践卡"), 2)
+        recommended_chain = top_level_bullet_items(find_section_body(sections, "如果只做一组内容"))[:8]
+
+        parts = [f"# {spec.id}"]
+        blurb = normalize_blurb(intro, spec.tagline, remove_prefixes=[spec.id])
+        if blurb:
+            parts.append(f"> {blurb}")
+        if top_outline:
+            parts.append(section("最适合先做的总纲内容", top_outline))
+        if concept_tracks:
+            parts.append(section("适合拆成概念页的方向", concept_tracks))
+        if method_tracks:
+            parts.append(section("适合拆成方法页的方向", method_tracks))
+        if org_tracks:
+            parts.append(section("适合拆成组织应用页的方向", org_tracks))
+        if recommended_chain:
+            parts.append(section("如果只做一组内容，建议这条链", bullet_list(recommended_chain)))
+        parts.append(section("适合接着点开的主题", bullet_list(node_summary_items(theme_ids, limit=5))))
+
+        return "\n\n".join(part for part in parts if part.strip())
+
+    def build_public_visual_direction_body(spec: NodeSpec, cleaned_body: str) -> str:
+        intro, sections = parse_markdown_sections(cleaned_body)
+        overview_visuals = render_subsections(find_section_body(sections, "整本书最值得反复复用的视觉入口"), 3)
+        method_visuals = render_subsections(find_section_body(sections, "最适合拆成方法页的视觉对象"), 3)
+        org_visuals = render_subsections(find_section_body(sections, "最适合拆成组织实践页的视觉对象"), 3)
+        chapter_visuals = top_level_bullet_items(find_section_body(sections, "按章节拆图时最优先抓的对象"))[:8]
+
+        parts = [f"# {spec.id}"]
+        blurb = normalize_blurb(intro, spec.tagline, remove_prefixes=[spec.id])
+        if blurb:
+            parts.append(f"> {blurb}")
+        if overview_visuals:
+            parts.append(section("整本书最值得先做的图", overview_visuals))
+        if method_visuals:
+            parts.append(section("适合拆成方法图的方向", method_visuals))
+        if org_visuals:
+            parts.append(section("适合拆成组织应用图的方向", org_visuals))
+        if chapter_visuals:
+            parts.append(section("按章节展开时优先抓什么", bullet_list(chapter_visuals)))
+        parts.append(section("适合对照阅读的章节", bullet_list([f"[[{name}]]" for name in chapter_ids])))
+
+        return "\n\n".join(part for part in parts if part.strip())
+
+    def build_public_concept_body(spec: NodeSpec, cleaned_body: str) -> str:
+        intro, sections = parse_markdown_sections(cleaned_body)
+        definition = find_section_body(sections, "核心定义")
+        judgments = find_section_body(sections, "可直接调用的判断")
+        solves = find_section_body(sections, "这张卡解决什么")
+        situations = find_section_body(sections, "进入哪些问题场景")
+        decision_rule = find_subsection_body(find_section_body(sections, "判断案例"), "一个简单判断法")
+        if not decision_rule:
+            decision_rule = find_subsection_body(find_section_body(sections, "典型案例"), "一个简单判断法")
+        if not decision_rule:
+            decision_rule = render_subsections(
+                merge_bodies(find_section_body(sections, "判断案例"), find_section_body(sections, "典型案例")),
+                2,
+            )
+        actions = render_subsections(find_section_body(sections, "场景动作模板"), 3)
+        mistakes = find_section_body(sections, "红线边界")
+
+        parts = [f"# {spec.id}"]
+        blurb = normalize_blurb(definition or intro, spec.tagline, remove_prefixes=[spec.id])
+        if blurb:
+            parts.append(f"> {blurb}")
+        if judgments:
+            parts.append(section("核心观点", judgments))
+        if solves:
+            parts.append(section("这个概念在解决什么", solves))
+        if situations:
+            parts.append(section("你会在什么情况下遇到它", situations))
+        if decision_rule:
+            parts.append(section("怎么判断你需要它", decision_rule))
+        if actions:
+            parts.append(section("你可以怎么使用", actions))
+        if mistakes:
+            parts.append(section("使用边界", mistakes))
+
+        links = public_links_section(
+            find_section_body(sections, "相关概念"),
+            find_section_body(sections, "关联主题页"),
+            limit=5,
+        )
+        if links:
+            parts.append(links)
+
+        return "\n\n".join(part for part in parts if part.strip())
+
+    def build_public_method_body(spec: NodeSpec, cleaned_body: str) -> str:
+        intro, sections = parse_markdown_sections(cleaned_body)
+        definition = find_section_body(sections, "核心定义")
+        judgments = find_section_body(sections, "可直接调用的判断")
+        solves = find_section_body(sections, "这张卡解决什么")
+        situations = find_section_body(sections, "进入哪些问题场景")
+        cases = render_subsections(
+            merge_bodies(find_section_body(sections, "典型案例"), find_section_body(sections, "判断案例")),
+            2,
+        )
+        actions = render_subsections(find_section_body(sections, "场景动作模板"), 3)
+        mistakes = find_section_body(sections, "红线边界")
+
+        parts = [f"# {spec.id}"]
+        blurb = normalize_blurb(definition or intro, spec.tagline, remove_prefixes=[spec.id])
+        if blurb:
+            parts.append(f"> {blurb}")
+        if situations:
+            parts.append(section("什么时候适合用", situations))
+        if solves:
+            parts.append(section("这能解决什么问题", solves))
+        if judgments:
+            parts.append(section("用好它的关键", judgments))
+        if actions:
+            parts.append(section("可以怎么做", actions))
+        if cases:
+            parts.append(section("一个常见例子", cases))
+        if mistakes:
+            parts.append(section("常见错误", mistakes))
+
+        links = public_links_section(
+            find_section_body(sections, "相关概念"),
+            find_section_body(sections, "关联主题页"),
+            limit=5,
+        )
+        if links:
+            parts.append(links)
+
+        return "\n\n".join(part for part in parts if part.strip())
+
+    def build_public_chapter_body(spec: NodeSpec, cleaned_body: str) -> str:
+        intro, sections = parse_markdown_sections(cleaned_body)
+        position = parse_labeled_bullets(find_section_body(sections, "章节定位卡"))
+        takeaways = top_level_numbered_items(find_section_body(sections, "章节内部推进链"))[:6]
+        key_concepts = render_subsections(find_section_body(sections, "本章核心概念表"), 3)
+        relation_lines = top_level_numbered_items(find_section_body(sections, "本章必须保留的关系线"))[:5]
+        examples = render_subsections(find_section_body(sections, "本章案例与比喻库"), 2)
+        method_body = render_subsections(find_section_body(sections, "本章方法、流程与判断动作"), 2)
+
+        chapter_index = chapter_ids.index(spec.id)
+        chapter = chapter_map[chapter_index]
+        related_links = [
+            name_to_node.get(name, name)
+            for name in chapter["core_concepts"]
+            if name_to_node.get(name, name) in spec_by_id
+        ]
+        related_links.extend(scenario_to_method_ids(chapter["title"] + chapter["key_question"], chapter["core_concepts"]))
+        if chapter_index > 0:
+            related_links.append(chapter_ids[chapter_index - 1])
+        if chapter_index < len(chapter_ids) - 1:
+            related_links.append(chapter_ids[chapter_index + 1])
+        related_links = dedupe_items([item for item in related_links if item in spec_by_id])[:6]
+
+        parts = [f"# {spec.id}"]
+        blurb = normalize_blurb(
+            position.get("本章核心问题", "") or intro,
+            spec.tagline,
+            remove_prefixes=[spec.id],
+        )
+        if blurb:
+            parts.append(f"> {blurb}")
+
+        overview_items = [
+            position.get("本章承担的作用", ""),
+            position.get("一句话章节结构", ""),
+            position.get("本章最终收口", ""),
+        ]
+        if any(item for item in overview_items):
+            parts.append(section("这一章在讲什么", bullet_list(overview_items)))
+
+        if takeaways:
+            parts.append(section("这一章最重要的收获", numbered_list(takeaways)))
+
+        why_it_matters = [
+            position.get("本章在全书中的位置", ""),
+            position.get("本章与上一章的关系", ""),
+            position.get("本章与下一章的关系", ""),
+            chapter.get("reader_output", ""),
+        ]
+        if any(item for item in why_it_matters):
+            parts.append(section("为什么这一章关键", bullet_list(why_it_matters)))
+
+        if key_concepts:
+            parts.append(section("本章关键概念", key_concepts))
+        if relation_lines:
+            parts.append(section("本章最值得记住的关系", numbered_list(relation_lines)))
+        if examples:
+            parts.append(section("一个能帮助理解本章的例子", examples))
+        if method_body:
+            parts.append(section("你可以带走的方法", method_body))
+        if related_links:
+            parts.append(section("延伸阅读", bullet_list([f"[[{name}]]" for name in related_links])))
+
+        return "\n\n".join(part for part in parts if part.strip())
+
     def process_source(spec: NodeSpec) -> str:
         markdown = read_text(spec.source)
-        body = strip_first_heading(markdown)
+        body = clean_source_body(markdown)
         body = rewrite_markdown_links(body, stem_to_node, name_to_node)
-        if spec.id == "全书摘要":
+        if spec.id == overview_id:
+            body = build_public_overview_body(spec, body)
+        elif spec.id == content_map_id:
+            body = build_public_content_map_body(spec, body)
+        elif spec.id == content_direction_id:
+            body = build_public_content_direction_body(spec, body)
+        elif spec.id == visual_direction_id:
+            body = build_public_visual_direction_body(spec, body)
+        elif spec.type == "chapter":
+            body = build_public_chapter_body(spec, body)
+        elif spec.type == "concept":
+            body = build_public_concept_body(spec, body)
+        elif spec.type == "method":
+            body = build_public_method_body(spec, body)
+        elif spec.type == "topic":
+            body = build_public_topic_body(spec, body)
+        if spec.id == overview_id:
             body = "\n\n".join(
                 [
                     body,
@@ -550,7 +1359,7 @@ def main() -> None:
                         "继续展开",
                         bullet_list(
                             [
-                                "[[全书论证链]]",
+                                f"[[{logic_id}]]",
                                 "[[领导者的意识进化]]",
                                 f"[[{chapter_ids[0]}]]",
                                 f"[[{chapter_ids[-1]}]]",
@@ -559,41 +1368,30 @@ def main() -> None:
                     ),
                 ]
             )
-        elif spec.id == "K卡N卡总表":
+        elif spec.id == content_map_id:
             body = "\n\n".join(
                 [
                     body,
                     section(
                         "站内入口",
-                        bullet_list([f"[[{name}]]" for name in theme_ids + concept_ids[:6] + method_ids]),
+                        bullet_list([f"[[{name}]]" for name in theme_ids + concept_ids[:6] + method_ids[:4]]),
                     ),
                 ]
             )
-        elif spec.id == "内容选题角度":
+        elif spec.id == content_direction_id:
             body = "\n\n".join(
                 [
                     body,
                     section("适合接着点开的主题", bullet_list([f"[[{name}]]" for name in theme_ids])),
                 ]
             )
-        elif spec.id == "视觉表达钩子":
+        elif spec.id == visual_direction_id:
             body = "\n\n".join(
                 [
                     body,
                     section("适合对照阅读的章节", bullet_list([f"[[{name}]]" for name in chapter_ids])),
                 ]
             )
-        elif spec.type == "chapter":
-            chapter_index = chapter_ids.index(spec.id)
-            chapter = chapter_map[chapter_index]
-            related_concepts = [name_to_node.get(name, name) for name in chapter["core_concepts"] if name_to_node.get(name, name) in spec_by_id]
-            related_methods = scenario_to_method_ids(chapter["title"] + chapter["key_question"], chapter["core_concepts"])
-            extra_items = [f"[[{item}]]" for item in related_concepts + related_methods if item in spec_by_id]
-            if chapter_index > 0:
-                extra_items.append(f"[[{chapter_ids[chapter_index - 1]}]]")
-            if chapter_index < len(chapter_ids) - 1:
-                extra_items.append(f"[[{chapter_ids[chapter_index + 1]}]]")
-            body = "\n\n".join([body, section("站内快链", bullet_list(extra_items))])
         return replace_heading(link_text(body, spec), spec.id)
 
     for spec in specs:
@@ -631,11 +1429,11 @@ def main() -> None:
         ]
     )
 
-    raw_bodies["全书论证链"] = "\n\n".join(
+    raw_bodies[logic_id] = "\n\n".join(
         [
-            "# 全书论证链",
+            f"# {logic_id}",
             f"> 用 {len(logic_chain)} 步把这本书从“复杂世界里的领导失灵”推进到“工作即成长场”。",
-            section("主问题链", numbered_list([link_text(item, spec_by_id["全书论证链"]) for item in logic_chain])),
+            section("主问题链", numbered_list([link_text(item, spec_by_id[logic_id]) for item in logic_chain])),
             section(
                 "建议阅读路径",
                 bullet_list(
@@ -656,7 +1454,7 @@ def main() -> None:
             f"> **《{book['title']}》作者**：{book['domain']}",
             section("这本书最核心的贡献", bullet_list([book["core_one_liner"], book["differentiator"]])),
             section("它直接解决什么问题", bullet_list(book["solves_problems"])),
-            section("建议从哪里读起", bullet_list(["[[全书摘要]]", "[[全书论证链]]", "[[领导者的意识进化]]", f"[[{chapter_ids[-1]}]]"])),
+            section("建议从哪里读起", bullet_list([f"[[{overview_id}]]", f"[[{logic_id}]]", "[[领导者的意识进化]]", f"[[{chapter_ids[-1]}]]"])),
         ]
     )
 
@@ -690,10 +1488,43 @@ def main() -> None:
                 "如果你准备继续读她",
                 bullet_list(
                     [
-                        "[[全书摘要]]：先拿到她到底在回答什么大问题。",
-                        "[[全书论证链]]：再看她如何把理论一步步推进到工作现场。",
+                        f"[[{overview_id}]]：先拿到她到底在回答什么大问题。",
+                        f"[[{logic_id}]]：再看她如何把理论一步步推进到工作现场。",
                         "[[领导者的意识进化]]：把整本书收成一套可反复调用的判断路径。",
                         f"[[{chapter_ids[-1]}]]：如果你更关心组织落地，可以直接从最后一章进入。",
+                    ]
+                ),
+            ),
+        ]
+    )
+
+    raw_bodies[logic_id] = "\n\n".join(
+        [
+            f"# {logic_id}",
+            f"> 用 {len(logic_chain)} 步把这本书从“复杂世界里的领导失灵”推进到“工作即成长场”。",
+            section("主问题链", numbered_list([link_text(item, spec_by_id[logic_id]) for item in logic_chain])),
+            section(
+                "为什么这条主线重要",
+                bullet_list(
+                    [
+                        book_skeleton["starting_point"],
+                        book_skeleton["core_turn"],
+                        book_skeleton["final_landing"],
+                    ]
+                ),
+            ),
+            section(
+                "顺着主线读会看到什么",
+                bullet_list([f"{item['part']}《{item['title']}》：{item['function']}" for item in part_structure]),
+            ),
+            section(
+                "建议阅读路径",
+                bullet_list(
+                    [
+                        "[[领导者的意识进化]]",
+                        f"[[{chapter_ids[0]}]]",
+                        f"[[{chapter_ids[2]}]]",
+                        f"[[{chapter_ids[-1]}]]",
                     ]
                 ),
             ),
@@ -730,7 +1561,7 @@ def main() -> None:
                 "推荐阅读路径",
                 " → ".join(
                     [
-                        "[[全书摘要]]",
+                        f"[[{overview_id}]]",
                         "[[领导者的意识进化]]",
                         f"[[{chapter_ids[0]}]]",
                         "[[成长边际]]",
@@ -751,11 +1582,11 @@ def main() -> None:
                 "你可以从这些入口开始",
                 bullet_list(
                     [
-                        "[[全书摘要]]：先拿整本书的主问题、三部分推进和最后落点。",
-                        "[[全书论证链]]：适合一口气看清逻辑推进。",
-                        "[[K卡N卡总表]]：直接看这本书最值得复用的 K / N 骨架。",
-                        "[[内容选题角度]]：适合继续拆成内容、项目或课程。",
-                        "[[视觉表达钩子]]：适合继续做图解和页面。",
+                        f"[[{overview_id}]]：先拿整本书的主问题、三部分推进和最后落点。",
+                        f"[[{logic_id}]]：适合一口气看清逻辑推进。",
+                        f"[[{content_map_id}]]：直接看这本书最值得留下的主题、概念和方法总览。",
+                        f"[[{content_direction_id}]]：适合继续拆成内容、项目或课程。",
+                        f"[[{visual_direction_id}]]：适合继续做图解和页面。",
                     ]
                 ),
             ),
@@ -763,9 +1594,9 @@ def main() -> None:
                 "关注作者",
                 bullet_list(
                     [
+                        "复杂世界和复杂人性的同行翻译者",
                         "微信公众号：林子-心智进化之路",
                         "小红书：林子-心智进化之路",
-                        "小红书号：249152808",
                     ]
                 ),
             ),
@@ -773,16 +1604,71 @@ def main() -> None:
                 "站内模块",
                 bullet_list(
                     [
-                        "主题：全书入口 + 书 K 卡 + 主题 K 卡。",
+                        "主题：全书入口与关键主题判断。",
                         "章节：八章推进，直接按书的逻辑走。",
                         "概念：把成人发展、结构判断和工作即成长场串起来。",
-                        "方法：把边际提问、发展型教练、反馈后学习、发展型会议直接落到动作上。",
+                        "方法：把边际提问、发展型教练、反馈后学习、发展型会议落到实际动作上。",
                         "场景：从培训无效、反馈失灵、会议空转这些高频问题切入。",
                     ]
                 ),
             ),
         ]
     )
+
+    for scenario, spec in zip(scenarios, scenario_specs):
+        resolved_concepts = []
+        for concept_name in scenario["linked_concepts"]:
+            canonical = name_to_node.get(concept_name)
+            if canonical and canonical not in resolved_concepts:
+                resolved_concepts.append(canonical)
+        related_methods = scenario_to_method_ids(spec.id + scenario["what_it_shows"], scenario["linked_concepts"])
+        related_chapters = related_chapter_ids(chapter_keywords, scenario["linked_concepts"] + resolved_concepts)
+        if not related_chapters:
+            related_chapters = [chapter_ids[0], chapter_ids[-1]]
+
+        raw_bodies[spec.id] = "\n\n".join(
+            [
+                f"# {spec.id}",
+                f"> {scenario['what_it_shows']}",
+                section(
+                    "这类情况表面发生了什么",
+                    bullet_list(
+                        [
+                            f"你在现场看到的，往往就是“{spec.id}”这类反应。",
+                            scenario["why_memorable"],
+                        ]
+                    ),
+                ),
+                section("底层卡点更可能在哪里", link_text(scenario["what_it_shows"], spec)),
+                section("先看哪几个概念", bullet_list(node_summary_items(resolved_concepts, limit=4))),
+                section(
+                    "可以先怎么应对",
+                    bullet_list(node_summary_items(related_methods, limit=3) or node_summary_items(resolved_concepts, limit=3)),
+                ),
+                section("适合一起看的章节", bullet_list(node_summary_items(related_chapters, limit=3))),
+                section(
+                    "如果想继续看透它",
+                    bullet_list(
+                        [
+                            f"[[{overview_id}]]：先回到整本书的问题地图。",
+                            f"[[{logic_id}]]：再看它在全书逻辑链里处在什么位置。",
+                            "[[领导者的意识进化]]：最后回到主题页，把相关概念和方法连起来看。",
+                        ]
+                    ),
+                ),
+            ]
+        )
+
+    for special_id, builder in [
+        (overview_id, build_public_overview_body),
+        (content_map_id, build_public_content_map_body),
+        (content_direction_id, build_public_content_direction_body),
+        (visual_direction_id, build_public_visual_direction_body),
+    ]:
+        special_spec = spec_by_id[special_id]
+        special_body = clean_source_body(read_text(special_spec.source))
+        special_body = rewrite_markdown_links(special_body, stem_to_node, name_to_node)
+        raw_bodies[special_id] = replace_heading(link_text(builder(special_spec, special_body), special_spec), special_spec.id)
 
     note_texts: dict[str, str] = {}
 
@@ -794,6 +1680,12 @@ def main() -> None:
                 body,
             ]
         )
+
+    public_specs = [spec for spec in specs if spec.id not in hidden_web_ids]
+    web_note_texts = {
+        spec.id: strip_hidden_lines(note_texts[spec.id], hidden_web_ids)
+        for spec in public_specs
+    }
 
     homepage_text = "\n\n".join(
         [
@@ -810,7 +1702,43 @@ def main() -> None:
         write_to_both(relative, note_texts[spec.id])
         file_map[spec.id] = f"/vault/{CATEGORY_DIR[spec.type]}/{safe_filename(spec.id)}.md"
 
+    write_note(
+        WEB_VAULT_DIR / Path("00_首页.md"),
+        "\n\n".join(
+            [
+                frontmatter(["首页", book["title"]], "首页"),
+                strip_hidden_lines(raw_bodies["00_首页"], hidden_web_ids),
+            ]
+        ),
+    )
+
+    for spec in public_specs:
+        relative = Path(CATEGORY_DIR[spec.type]) / f"{safe_filename(spec.id)}.md"
+        write_note(WEB_VAULT_DIR / relative, web_note_texts[spec.id])
+
+    for spec in specs:
+        if spec.id not in hidden_web_ids:
+            continue
+        relative = Path(CATEGORY_DIR[spec.type]) / f"{safe_filename(spec.id)}.md"
+        hidden_path = WEB_VAULT_DIR / relative
+        if hidden_path.exists():
+            hidden_path.unlink()
+        file_map.pop(spec.id, None)
+
     node_images = copy_chapter_images(chapter_ids)
+    for node_id in [overview_id, logic_id, content_map_id, "领导者的意识进化"]:
+        node_images[node_id] = "/chapter-images/overview.jpg"
+
+    for node_id in [
+        overview_id,
+        logic_id,
+        content_map_id,
+        "领导者的意识进化",
+        "全书摘要",
+        "全书论证链",
+        "K卡N卡总表",
+    ]:
+        node_images.pop(node_id, None)
 
     edges: list[dict] = []
     edge_keys: set[tuple[str, str]] = set()
@@ -826,7 +1754,7 @@ def main() -> None:
         edges.append({"source": source, "target": target})
         link_labels[f"{source}→{target}"] = label
 
-    for source_id, content in note_texts.items():
+    for source_id, content in web_note_texts.items():
         for match in re.findall(r"\[\[([^\]]+)\]\]", content):
             target = name_to_node.get(match)
             if not target:
@@ -834,7 +1762,7 @@ def main() -> None:
             add_edge(source_id, target, f"{NODE_TYPE_META[spec_by_id[source_id].type]['label']}关联")
 
     add_edge(book["author"], "领导者的意识进化", "作者与书卡")
-    add_edge("全书摘要", "全书论证链", "从总览到主线")
+    add_edge(overview_id, logic_id, "从总览到主线")
     for current, next_chapter in zip(chapter_ids, chapter_ids[1:]):
         add_edge(current, next_chapter, "章节推进")
 
@@ -844,8 +1772,8 @@ def main() -> None:
             "label": "主题入口",
             "color": NODE_TYPE_META["topic"]["color"],
             "sections": [
-                {"label": "全书入口", "items": ["全书摘要", "全书论证链", "K卡N卡总表", "内容选题角度", "视觉表达钩子"]},
-                {"label": "主题 K 卡", "items": theme_ids},
+                {"label": "全书入口", "items": [overview_id, logic_id, content_map_id, content_direction_id, visual_direction_id]},
+                {"label": "核心主题", "items": theme_ids},
             ],
         },
         {
@@ -858,13 +1786,13 @@ def main() -> None:
             "id": "concepts",
             "label": "核心概念",
             "color": NODE_TYPE_META["concept"]["color"],
-            "sections": [{"label": "N 概念卡", "items": concept_ids}],
+            "sections": [{"label": "概念", "items": concept_ids}],
         },
         {
             "id": "methods",
             "label": "动作方法",
             "color": NODE_TYPE_META["method"]["color"],
-            "sections": [{"label": "N 方法卡", "items": method_ids}],
+            "sections": [{"label": "方法", "items": method_ids}],
         },
         {
             "id": "scenarios",
@@ -885,14 +1813,14 @@ def main() -> None:
             "id": "overview",
             "title": "全书入口",
             "subtitle": "先拿总地图",
-            "desc": "先看清主问题链、K/N 总表和内容化入口，再决定从哪一层往下钻。",
+            "desc": "先看清主问题链、全书总览和内容化入口，再决定从哪一层往下钻。",
             "color": NODE_TYPE_META["topic"]["color"],
-            "nodes": ["全书摘要", "全书论证链", "K卡N卡总表", "内容选题角度", "视觉表达钩子"],
+            "nodes": [overview_id, logic_id, content_map_id, content_direction_id, visual_direction_id],
         },
         {
             "id": "themes",
-            "title": "主题 K 卡",
-            "subtitle": "把书变成判断路径",
+            "title": "核心主题",
+            "subtitle": "把书变成可复用判断",
             "desc": "把《领导者的意识进化》从目录，重构成你可反复调用的主题与观点页。",
             "color": NODE_TYPE_META["topic"]["color"],
             "nodes": theme_ids,
@@ -907,7 +1835,7 @@ def main() -> None:
         },
         {
             "id": "concepts",
-            "title": "N 概念卡",
+            "title": "核心概念",
             "subtitle": "把底层概念拿稳",
             "desc": "成人发展、成长边际、转化性学习、工作即成长场，是这本书最值得留下的底层抓手。",
             "color": NODE_TYPE_META["concept"]["color"],
@@ -915,7 +1843,7 @@ def main() -> None:
         },
         {
             "id": "methods",
-            "title": "N 方法卡",
+            "title": "方法工具",
             "subtitle": "把成长落到动作",
             "desc": "从边际提问到发展型会议，把理论接回一对一、反馈、会议和带教现场。",
             "color": NODE_TYPE_META["method"]["color"],
@@ -931,6 +1859,9 @@ def main() -> None:
         },
     ]
 
+    toc[0]["sections"][0]["items"] = [overview_id, logic_id, content_map_id]
+    home_sections[0]["nodes"] = [overview_id, logic_id, content_map_id]
+
     filters = [
         {"type": node_type, "label": meta["label"], "color": meta["color"]}
         for node_type, meta in NODE_TYPE_META.items()
@@ -940,41 +1871,30 @@ def main() -> None:
         "title": book["title"],
         "shortTitle": "心智进化",
         "subtitle": "成人发展、领导力成长与工作即成长场",
-        "description": "基于《领导者的意识进化》整理的单书知识站，把全书入口、K 卡、N 卡、章节地图和现实场景串成可点击的阅读地图。",
+        "description": "基于《领导者的意识进化》整理的单书知识站，把全书入口、核心主题、关键概念、方法工具与现实场景串成可点击的阅读地图。",
         "heroOverline": "LEADERSHIP · DEVELOPMENT · COMPLEXITY",
         "heroTitleLines": [book["title"], "把复杂世界中的领导成长做成可点击地图"],
         "creatorLabel": "整理与输出",
         "creatorName": "林子-心智进化之路",
-        "footerNote": "公众号 / 小红书同名，欢迎关注",
+        "footerNote": "复杂世界和复杂人性的同行翻译者",
         "assetVersion": BUILD_VERSION,
         "searchPlaceholder": "搜索主题、章节、概念、方法、场景…",
-        "recommendedPath": ["全书摘要", "领导者的意识进化", chapter_ids[0], "成长边际", chapter_ids[-1]],
-        "quickLinks": ["全书论证链", "K卡N卡总表", "领导力瓶颈不在技能，而在心智复杂度", "工作即成长场", "发展型教练", "发展型会议"],
+        "recommendedPath": [overview_id, "领导者的意识进化", chapter_ids[0], "成长边际", chapter_ids[-1]],
+        "quickLinks": [logic_id, content_map_id, "领导力瓶颈不在技能，而在心智复杂度", "工作即成长场", "发展型教练", "发展型会议"],
         "followTitle": "关注作者",
-        "followDescription": "这个站点背后的内容主理人是 林子-心智进化之路。公众号和小红书同名，小红书号也一并放在首页，方便你直接搜索、复制和关注。",
+        "followDescription": "复杂世界和复杂人性的同行翻译者",
         "socialChannels": [
             {
                 "id": "wechat",
                 "label": "微信公众号",
-                "name": "林子-心智进化之路",
-                "description": "微信里直接搜索同名公众号即可找到我，适合长期关注系统化内容。",
-                "copyNameLabel": "复制公众号名",
-                "copyNameValue": "林子-心智进化之路",
                 "qrImage": "/social/wechat-official-qrcode.png",
                 "fallbackText": "微信里搜索“林子-心智进化之路”即可关注。",
             },
             {
                 "id": "xiaohongshu",
                 "label": "小红书",
-                "name": "林子-心智进化之路",
-                "accountId": "249152808",
-                "description": "小红书可直接搜同名账号，或者用账号号更快定位到我。",
-                "copyNameLabel": "复制小红书名",
-                "copyNameValue": "林子-心智进化之路",
-                "copyIdLabel": "复制小红书号",
-                "copyIdValue": "249152808",
                 "qrImage": "/social/xiaohongshu-qrcode.png",
-                "fallbackText": "小红书搜索“林子-心智进化之路”或账号号 249152808。",
+                "fallbackText": "小红书搜索“林子-心智进化之路”即可关注。",
             },
         ],
         "journeyOverline": "Journey Map",
@@ -985,14 +1905,16 @@ def main() -> None:
         "stats": [
             {"label": "主题页", "value": str(len(topic_specs) + len(theme_specs))},
             {"label": "章节", "value": str(len(chapter_ids))},
-            {"label": "N 卡", "value": str(len(concept_ids) + len(method_ids))},
+            {"label": "概念 / 方法", "value": str(len(concept_ids) + len(method_ids))},
             {"label": "场景", "value": str(len(scenario_ids))},
         ],
     }
 
+    site["stats"][0]["value"] = str(sum(1 for spec in public_specs if spec.type == "topic"))
+
     node_data = [
         {"id": spec.id, "type": spec.type, "tagline": shorten(spec.tagline or spec.id)}
-        for spec in specs
+        for spec in public_specs
     ]
 
     GRAPH_DATA_PATH.write_text(
@@ -1010,7 +1932,7 @@ def main() -> None:
         encoding="utf-8",
     )
 
-    print(f"Generated {len(specs)} nodes and {len(edges)} links.")
+    print(f"Generated {len(public_specs)} public nodes and {len(edges)} links.")
     print(f"Vault: {VAULT_DIR}")
     print(f"Graph data: {GRAPH_DATA_PATH}")
 

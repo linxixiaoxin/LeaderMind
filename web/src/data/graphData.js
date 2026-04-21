@@ -2,7 +2,7 @@ export const SITE = {
   "title": "领导者的意识进化",
   "shortTitle": "心智进化",
   "subtitle": "成人发展、领导力成长与工作即成长场",
-  "description": "基于《领导者的意识进化》整理的单书知识站，把全书入口、K 卡、N 卡、章节地图和现实场景串成可点击的阅读地图。",
+  "description": "基于《领导者的意识进化》整理的单书知识站，把全书入口、核心主题、关键概念、方法工具与现实场景串成可点击的阅读地图。",
   "heroOverline": "LEADERSHIP · DEVELOPMENT · COMPLEXITY",
   "heroTitleLines": [
     "领导者的意识进化",
@@ -10,49 +10,38 @@ export const SITE = {
   ],
   "creatorLabel": "整理与输出",
   "creatorName": "林子-心智进化之路",
-  "footerNote": "公众号 / 小红书同名，欢迎关注",
-  "assetVersion": "20260421121552",
+  "footerNote": "复杂世界和复杂人性的同行翻译者",
+  "assetVersion": "20260421182847",
   "searchPlaceholder": "搜索主题、章节、概念、方法、场景…",
   "recommendedPath": [
-    "全书摘要",
+    "全书导读",
     "领导者的意识进化",
     "第一章 心智的层次",
     "成长边际",
     "第八章 孕育智慧"
   ],
   "quickLinks": [
-    "全书论证链",
-    "K卡N卡总表",
+    "全书脉络",
+    "核心内容总览",
     "领导力瓶颈不在技能，而在心智复杂度",
     "工作即成长场",
     "发展型教练",
     "发展型会议"
   ],
   "followTitle": "关注作者",
-  "followDescription": "这个站点背后的内容主理人是 林子-心智进化之路。公众号和小红书同名，小红书号也一并放在首页，方便你直接搜索、复制和关注。",
+  "followDescription": "复杂世界和复杂人性的同行翻译者",
   "socialChannels": [
     {
       "id": "wechat",
       "label": "微信公众号",
-      "name": "林子-心智进化之路",
-      "description": "微信里直接搜索同名公众号即可找到我，适合长期关注系统化内容。",
-      "copyNameLabel": "复制公众号名",
-      "copyNameValue": "林子-心智进化之路",
       "qrImage": "/social/wechat-official-qrcode.png",
       "fallbackText": "微信里搜索“林子-心智进化之路”即可关注。"
     },
     {
       "id": "xiaohongshu",
       "label": "小红书",
-      "name": "林子-心智进化之路",
-      "accountId": "249152808",
-      "description": "小红书可直接搜同名账号，或者用账号号更快定位到我。",
-      "copyNameLabel": "复制小红书名",
-      "copyNameValue": "林子-心智进化之路",
-      "copyIdLabel": "复制小红书号",
-      "copyIdValue": "249152808",
       "qrImage": "/social/xiaohongshu-qrcode.png",
-      "fallbackText": "小红书搜索“林子-心智进化之路”或账号号 249152808。"
+      "fallbackText": "小红书搜索“林子-心智进化之路”即可关注。"
     }
   ],
   "journeyOverline": "Journey Map",
@@ -63,7 +52,7 @@ export const SITE = {
     {
       "level": "LV.0",
       "stage": "总纲入口",
-      "node": "全书摘要",
+      "node": "全书导读",
       "image": "/chapter-images/overview.jpg",
       "summary": "这本书真正要回答的，不是领导者还该多学什么技能，而是领导者怎样发展出足以承载复杂世界的心智结构。",
       "bridgeToNext": "为什么同一件事会被不同人看成完全不同的现实？"
@@ -136,14 +125,14 @@ export const SITE = {
   "stats": [
     {
       "label": "主题页",
-      "value": "11"
+      "value": "9"
     },
     {
       "label": "章节",
       "value": "8"
     },
     {
-      "label": "N 卡",
+      "label": "概念 / 方法",
       "value": "23"
     },
     {
@@ -228,15 +217,13 @@ export const TOC = [
       {
         "label": "全书入口",
         "items": [
-          "全书摘要",
-          "全书论证链",
-          "K卡N卡总表",
-          "内容选题角度",
-          "视觉表达钩子"
+          "全书导读",
+          "全书脉络",
+          "核心内容总览"
         ]
       },
       {
-        "label": "主题 K 卡",
+        "label": "核心主题",
         "items": [
           "领导者的意识进化",
           "复杂世界中的领导者成长",
@@ -274,7 +261,7 @@ export const TOC = [
     "color": "#6b8566",
     "sections": [
       {
-        "label": "N 概念卡",
+        "label": "概念",
         "items": [
           "成人发展理论",
           "主体 - 客体转换",
@@ -302,7 +289,7 @@ export const TOC = [
     "color": "#8c5d7a",
     "sections": [
       {
-        "label": "N 方法卡",
+        "label": "方法",
         "items": [
           "边际提问",
           "发展型教练",
@@ -355,20 +342,18 @@ export const HOME_SECTIONS = [
     "id": "overview",
     "title": "全书入口",
     "subtitle": "先拿总地图",
-    "desc": "先看清主问题链、K/N 总表和内容化入口，再决定从哪一层往下钻。",
+    "desc": "先看清主问题链、全书总览和内容化入口，再决定从哪一层往下钻。",
     "color": "#3f6c78",
     "nodes": [
-      "全书摘要",
-      "全书论证链",
-      "K卡N卡总表",
-      "内容选题角度",
-      "视觉表达钩子"
+      "全书导读",
+      "全书脉络",
+      "核心内容总览"
     ]
   },
   {
     "id": "themes",
-    "title": "主题 K 卡",
-    "subtitle": "把书变成判断路径",
+    "title": "核心主题",
+    "subtitle": "把书变成可复用判断",
     "desc": "把《领导者的意识进化》从目录，重构成你可反复调用的主题与观点页。",
     "color": "#3f6c78",
     "nodes": [
@@ -399,7 +384,7 @@ export const HOME_SECTIONS = [
   },
   {
     "id": "concepts",
-    "title": "N 概念卡",
+    "title": "核心概念",
     "subtitle": "把底层概念拿稳",
     "desc": "成人发展、成长边际、转化性学习、工作即成长场，是这本书最值得留下的底层抓手。",
     "color": "#6b8566",
@@ -424,7 +409,7 @@ export const HOME_SECTIONS = [
   },
   {
     "id": "methods",
-    "title": "N 方法卡",
+    "title": "方法工具",
     "subtitle": "把成长落到动作",
     "desc": "从边际提问到发展型会议，把理论接回一对一、反馈、会议和带教现场。",
     "color": "#8c5d7a",
@@ -458,11 +443,9 @@ export const HOME_SECTIONS = [
 ]
 
 export const FILE_MAP = {
-  "全书摘要": "/vault/主题/全书摘要.md",
-  "全书论证链": "/vault/主题/全书论证链.md",
-  "K卡N卡总表": "/vault/主题/K卡N卡总表.md",
-  "内容选题角度": "/vault/主题/内容选题角度.md",
-  "视觉表达钩子": "/vault/主题/视觉表达钩子.md",
+  "全书导读": "/vault/主题/全书导读.md",
+  "全书脉络": "/vault/主题/全书脉络.md",
+  "核心内容总览": "/vault/主题/核心内容总览.md",
   "领导者的意识进化": "/vault/主题/领导者的意识进化.md",
   "复杂世界中的领导者成长": "/vault/主题/复杂世界中的领导者成长.md",
   "领导力瓶颈不在技能，而在心智复杂度": "/vault/主题/领导力瓶颈不在技能，而在心智复杂度.md",
@@ -512,10 +495,6 @@ export const FILE_MAP = {
 }
 
 export const NODE_IMAGES = {
-  "全书摘要": "/chapter-images/overview.jpg",
-  "全书论证链": "/chapter-images/overview.jpg",
-  "K卡N卡总表": "/chapter-images/overview.jpg",
-  "领导者的意识进化": "/chapter-images/overview.jpg",
   "第一章 心智的层次": "/chapter-images/chapter-1.jpg",
   "第二章 深入分析心智结构": "/chapter-images/chapter-2.jpg",
   "第三章 寻找成长的边际": "/chapter-images/chapter-3.jpg",
@@ -528,29 +507,19 @@ export const NODE_IMAGES = {
 
 export const NODES = [
   {
-    "id": "全书摘要",
+    "id": "全书导读",
     "type": "topic",
     "tagline": "这本书真正要回答的，不是领导者还该多学什么技能，而是领导者怎样发展出足以承载复杂世界的心智结构。"
   },
   {
-    "id": "全书论证链",
+    "id": "全书脉络",
     "type": "topic",
     "tagline": "用 10 步把这本书从复杂世界的领导难题，推进到工作即成长场。"
   },
   {
-    "id": "K卡N卡总表",
+    "id": "核心内容总览",
     "type": "topic",
-    "tagline": "把这本书最值得复用的 K 卡与 N 卡收成一张总路由表。"
-  },
-  {
-    "id": "内容选题角度",
-    "type": "topic",
-    "tagline": "把全书拆成适合做内容、课程和表达的高价值切口。"
-  },
-  {
-    "id": "视觉表达钩子",
-    "type": "topic",
-    "tagline": "把抽象心智结构翻成更适合图解与页面表达的视觉对象。"
+    "tagline": "把这本书最值得留下的主题、概念和方法收成一张总览图。"
   },
   {
     "id": "领导者的意识进化",
@@ -786,488 +755,192 @@ export const NODES = [
 
 export const LINKS = [
   {
-    "source": "全书摘要",
-    "target": "领导者的意识进化"
-  },
-  {
-    "source": "全书摘要",
-    "target": "Jennifer Garvey Berger（珍妮弗·加维·伯格）"
-  },
-  {
-    "source": "全书摘要",
+    "source": "全书导读",
     "target": "成人发展理论"
   },
   {
-    "source": "全书摘要",
-    "target": "第一章 心智的层次"
-  },
-  {
-    "source": "全书摘要",
-    "target": "第二章 深入分析心智结构"
-  },
-  {
-    "source": "全书摘要",
+    "source": "全书导读",
     "target": "规范主导"
   },
   {
-    "source": "全书摘要",
+    "source": "全书导读",
     "target": "自主导向"
   },
   {
-    "source": "全书摘要",
+    "source": "全书导读",
     "target": "内观自变"
   },
   {
-    "source": "全书摘要",
-    "target": "成长边际"
+    "source": "全书导读",
+    "target": "全书脉络"
   },
   {
-    "source": "全书摘要",
-    "target": "第三章 寻找成长的边际"
+    "source": "全书导读",
+    "target": "领导者的意识进化"
   },
   {
-    "source": "全书摘要",
-    "target": "第四章 扩展式的成长教练"
+    "source": "全书导读",
+    "target": "第一章 心智的层次"
   },
   {
-    "source": "全书摘要",
-    "target": "第五章 专业发展的蜕变"
-  },
-  {
-    "source": "全书摘要",
-    "target": "跨层级空间"
-  },
-  {
-    "source": "全书摘要",
-    "target": "转化性学习"
-  },
-  {
-    "source": "全书摘要",
-    "target": "第六章 具转化性的心智习惯"
-  },
-  {
-    "source": "全书摘要",
-    "target": "提出不同问题"
-  },
-  {
-    "source": "全书摘要",
-    "target": "接纳多面向观点"
-  },
-  {
-    "source": "全书摘要",
-    "target": "看见系统全貌"
-  },
-  {
-    "source": "全书摘要",
-    "target": "第七章 孕育领导力"
-  },
-  {
-    "source": "全书摘要",
+    "source": "全书导读",
     "target": "第八章 孕育智慧"
   },
   {
-    "source": "全书摘要",
-    "target": "众人的任务"
+    "source": "全书脉络",
+    "target": "成人发展理论"
   },
   {
-    "source": "全书摘要",
-    "target": "主体 - 客体转换"
+    "source": "全书脉络",
+    "target": "规范主导"
   },
   {
-    "source": "全书摘要",
-    "target": "发展型教练"
+    "source": "全书脉络",
+    "target": "自主导向"
   },
   {
-    "source": "全书摘要",
+    "source": "全书脉络",
+    "target": "内观自变"
+  },
+  {
+    "source": "全书脉络",
     "target": "结构与内容"
   },
   {
-    "source": "全书摘要",
+    "source": "全书脉络",
+    "target": "成长边际"
+  },
+  {
+    "source": "全书脉络",
     "target": "转化性心智习惯"
   },
   {
-    "source": "全书摘要",
-    "target": "反馈后学习"
+    "source": "全书脉络",
+    "target": "领导者的意识进化"
   },
   {
-    "source": "全书摘要",
-    "target": "发展型会议"
+    "source": "全书脉络",
+    "target": "第一章 心智的层次"
   },
   {
-    "source": "全书摘要",
+    "source": "全书脉络",
+    "target": "第三章 寻找成长的边际"
+  },
+  {
+    "source": "全书脉络",
+    "target": "第八章 孕育智慧"
+  },
+  {
+    "source": "核心内容总览",
+    "target": "全书导读"
+  },
+  {
+    "source": "核心内容总览",
+    "target": "全书脉络"
+  },
+  {
+    "source": "核心内容总览",
     "target": "工作即成长场"
   },
   {
-    "source": "全书摘要",
-    "target": "全书论证链"
-  },
-  {
-    "source": "全书论证链",
-    "target": "成人发展理论"
-  },
-  {
-    "source": "全书论证链",
-    "target": "规范主导"
-  },
-  {
-    "source": "全书论证链",
-    "target": "自主导向"
-  },
-  {
-    "source": "全书论证链",
-    "target": "内观自变"
-  },
-  {
-    "source": "全书论证链",
-    "target": "结构与内容"
-  },
-  {
-    "source": "全书论证链",
-    "target": "成长边际"
-  },
-  {
-    "source": "全书论证链",
-    "target": "转化性心智习惯"
-  },
-  {
-    "source": "全书论证链",
+    "source": "核心内容总览",
     "target": "领导者的意识进化"
   },
   {
-    "source": "全书论证链",
-    "target": "第一章 心智的层次"
-  },
-  {
-    "source": "全书论证链",
-    "target": "第三章 寻找成长的边际"
-  },
-  {
-    "source": "全书论证链",
-    "target": "第八章 孕育智慧"
-  },
-  {
-    "source": "K卡N卡总表",
-    "target": "领导者的意识进化"
-  },
-  {
-    "source": "K卡N卡总表",
+    "source": "核心内容总览",
     "target": "复杂世界中的领导者成长"
   },
   {
-    "source": "K卡N卡总表",
+    "source": "核心内容总览",
     "target": "领导力瓶颈不在技能，而在心智复杂度"
   },
   {
-    "source": "K卡N卡总表",
+    "source": "核心内容总览",
     "target": "从结构判断到成长支持：如何找到成长边际"
   },
   {
-    "source": "K卡N卡总表",
-    "target": "为什么很多培训回到工作里人却没变"
-  },
-  {
-    "source": "K卡N卡总表",
-    "target": "工作现场如何变成发展容器"
-  },
-  {
-    "source": "K卡N卡总表",
-    "target": "成人发展理论"
-  },
-  {
-    "source": "K卡N卡总表",
-    "target": "规范主导"
-  },
-  {
-    "source": "K卡N卡总表",
-    "target": "自主导向"
-  },
-  {
-    "source": "K卡N卡总表",
-    "target": "内观自变"
-  },
-  {
-    "source": "K卡N卡总表",
-    "target": "结构与内容"
-  },
-  {
-    "source": "K卡N卡总表",
+    "source": "核心内容总览",
     "target": "成长边际"
   },
   {
-    "source": "K卡N卡总表",
-    "target": "转化性心智习惯"
+    "source": "核心内容总览",
+    "target": "为什么很多培训回到工作里人却没变"
   },
   {
-    "source": "K卡N卡总表",
-    "target": "工作即成长场"
+    "source": "核心内容总览",
+    "target": "成人发展理论"
   },
   {
-    "source": "K卡N卡总表",
-    "target": "转化性学习"
+    "source": "核心内容总览",
+    "target": "主体 - 客体转换"
   },
   {
-    "source": "K卡N卡总表",
-    "target": "跨层级空间"
+    "source": "核心内容总览",
+    "target": "规范主导"
   },
   {
-    "source": "K卡N卡总表",
-    "target": "发展型教练"
+    "source": "核心内容总览",
+    "target": "自主导向"
   },
   {
-    "source": "K卡N卡总表",
+    "source": "核心内容总览",
+    "target": "内观自变"
+  },
+  {
+    "source": "核心内容总览",
+    "target": "结构与内容"
+  },
+  {
+    "source": "核心内容总览",
     "target": "边际提问"
   },
   {
-    "source": "K卡N卡总表",
-    "target": "反馈后学习"
-  },
-  {
-    "source": "K卡N卡总表",
-    "target": "发展型会议"
-  },
-  {
-    "source": "K卡N卡总表",
-    "target": "信息性学习"
-  },
-  {
-    "source": "K卡N卡总表",
-    "target": "提出不同问题"
-  },
-  {
-    "source": "K卡N卡总表",
-    "target": "接纳多面向观点"
-  },
-  {
-    "source": "K卡N卡总表",
-    "target": "看见系统全貌"
-  },
-  {
-    "source": "K卡N卡总表",
-    "target": "领导力脚手架"
-  },
-  {
-    "source": "K卡N卡总表",
-    "target": "组织的双重任务"
-  },
-  {
-    "source": "K卡N卡总表",
-    "target": "众人的任务"
-  },
-  {
-    "source": "K卡N卡总表",
-    "target": "规律性的正式对话"
-  },
-  {
-    "source": "K卡N卡总表",
-    "target": "第一章 心智的层次"
-  },
-  {
-    "source": "K卡N卡总表",
-    "target": "第二章 深入分析心智结构"
-  },
-  {
-    "source": "K卡N卡总表",
-    "target": "第三章 寻找成长的边际"
-  },
-  {
-    "source": "K卡N卡总表",
-    "target": "第四章 扩展式的成长教练"
-  },
-  {
-    "source": "K卡N卡总表",
-    "target": "第五章 专业发展的蜕变"
-  },
-  {
-    "source": "K卡N卡总表",
-    "target": "第六章 具转化性的心智习惯"
-  },
-  {
-    "source": "K卡N卡总表",
-    "target": "第七章 孕育领导力"
-  },
-  {
-    "source": "K卡N卡总表",
-    "target": "第八章 孕育智慧"
-  },
-  {
-    "source": "K卡N卡总表",
-    "target": "主体 - 客体转换"
-  },
-  {
-    "source": "内容选题角度",
-    "target": "成人发展理论"
-  },
-  {
-    "source": "内容选题角度",
-    "target": "规范主导"
-  },
-  {
-    "source": "内容选题角度",
-    "target": "自主导向"
-  },
-  {
-    "source": "内容选题角度",
-    "target": "内观自变"
-  },
-  {
-    "source": "内容选题角度",
-    "target": "工作即成长场"
-  },
-  {
-    "source": "内容选题角度",
-    "target": "成长边际"
-  },
-  {
-    "source": "内容选题角度",
-    "target": "转化性心智习惯"
-  },
-  {
-    "source": "内容选题角度",
-    "target": "反馈后学习"
-  },
-  {
-    "source": "内容选题角度",
-    "target": "发展型会议"
-  },
-  {
-    "source": "内容选题角度",
-    "target": "结构与内容"
-  },
-  {
-    "source": "内容选题角度",
-    "target": "转化性学习"
-  },
-  {
-    "source": "内容选题角度",
-    "target": "跨层级空间"
-  },
-  {
-    "source": "内容选题角度",
-    "target": "提出不同问题"
-  },
-  {
-    "source": "内容选题角度",
-    "target": "接纳多面向观点"
-  },
-  {
-    "source": "内容选题角度",
-    "target": "看见系统全貌"
-  },
-  {
-    "source": "内容选题角度",
+    "source": "核心内容总览",
     "target": "发展型教练"
   },
   {
-    "source": "内容选题角度",
-    "target": "主体 - 客体转换"
-  },
-  {
-    "source": "内容选题角度",
-    "target": "组织的双重任务"
-  },
-  {
-    "source": "内容选题角度",
-    "target": "领导者的意识进化"
-  },
-  {
-    "source": "内容选题角度",
-    "target": "复杂世界中的领导者成长"
-  },
-  {
-    "source": "内容选题角度",
-    "target": "领导力瓶颈不在技能，而在心智复杂度"
-  },
-  {
-    "source": "内容选题角度",
-    "target": "从结构判断到成长支持：如何找到成长边际"
-  },
-  {
-    "source": "内容选题角度",
-    "target": "为什么很多培训回到工作里人却没变"
-  },
-  {
-    "source": "内容选题角度",
-    "target": "工作现场如何变成发展容器"
-  },
-  {
-    "source": "视觉表达钩子",
-    "target": "规范主导"
-  },
-  {
-    "source": "视觉表达钩子",
-    "target": "自主导向"
-  },
-  {
-    "source": "视觉表达钩子",
-    "target": "内观自变"
-  },
-  {
-    "source": "视觉表达钩子",
-    "target": "成长边际"
-  },
-  {
-    "source": "视觉表达钩子",
-    "target": "主体 - 客体转换"
-  },
-  {
-    "source": "视觉表达钩子",
-    "target": "转化性学习"
-  },
-  {
-    "source": "视觉表达钩子",
-    "target": "转化性心智习惯"
-  },
-  {
-    "source": "视觉表达钩子",
-    "target": "提出不同问题"
-  },
-  {
-    "source": "视觉表达钩子",
-    "target": "接纳多面向观点"
-  },
-  {
-    "source": "视觉表达钩子",
-    "target": "看见系统全貌"
-  },
-  {
-    "source": "视觉表达钩子",
+    "source": "核心内容总览",
     "target": "反馈后学习"
   },
   {
-    "source": "视觉表达钩子",
-    "target": "工作即成长场"
+    "source": "核心内容总览",
+    "target": "发展型会议"
   },
   {
-    "source": "视觉表达钩子",
-    "target": "第一章 心智的层次"
+    "source": "核心内容总览",
+    "target": "提出不同问题"
   },
   {
-    "source": "视觉表达钩子",
-    "target": "第二章 深入分析心智结构"
+    "source": "核心内容总览",
+    "target": "培训做了不少，行为和判断却没真正变"
   },
   {
-    "source": "视觉表达钩子",
-    "target": "第三章 寻找成长的边际"
+    "source": "核心内容总览",
+    "target": "同一场会议里，不同人像活在不同宇宙"
   },
   {
-    "source": "视觉表达钩子",
-    "target": "第四章 扩展式的成长教练"
+    "source": "核心内容总览",
+    "target": "领导总想用格局不够一句话解释别人"
   },
   {
-    "source": "视觉表达钩子",
-    "target": "第五章 专业发展的蜕变"
+    "source": "核心内容总览",
+    "target": "给了很多反馈，对方却越来越防御"
   },
   {
-    "source": "视觉表达钩子",
-    "target": "第六章 具转化性的心智习惯"
+    "source": "领导者的意识进化",
+    "target": "规范主导"
   },
   {
-    "source": "视觉表达钩子",
-    "target": "第七章 孕育领导力"
+    "source": "领导者的意识进化",
+    "target": "自主导向"
   },
   {
-    "source": "视觉表达钩子",
-    "target": "第八章 孕育智慧"
+    "source": "领导者的意识进化",
+    "target": "内观自变"
+  },
+  {
+    "source": "领导者的意识进化",
+    "target": "成长边际"
   },
   {
     "source": "领导者的意识进化",
@@ -1279,23 +952,7 @@ export const LINKS = [
   },
   {
     "source": "领导者的意识进化",
-    "target": "规范主导"
-  },
-  {
-    "source": "领导者的意识进化",
-    "target": "自主导向"
-  },
-  {
-    "source": "领导者的意识进化",
-    "target": "内观自变"
-  },
-  {
-    "source": "领导者的意识进化",
     "target": "结构与内容"
-  },
-  {
-    "source": "领导者的意识进化",
-    "target": "成长边际"
   },
   {
     "source": "领导者的意识进化",
@@ -1348,18 +1005,6 @@ export const LINKS = [
   {
     "source": "领导者的意识进化",
     "target": "工作现场如何变成发展容器"
-  },
-  {
-    "source": "领导者的意识进化",
-    "target": "全书摘要"
-  },
-  {
-    "source": "领导者的意识进化",
-    "target": "K卡N卡总表"
-  },
-  {
-    "source": "领导者的意识进化",
-    "target": "视觉表达钩子"
   },
   {
     "source": "复杂世界中的领导者成长",
@@ -1438,22 +1083,6 @@ export const LINKS = [
     "target": "工作现场如何变成发展容器"
   },
   {
-    "source": "复杂世界中的领导者成长",
-    "target": "全书摘要"
-  },
-  {
-    "source": "复杂世界中的领导者成长",
-    "target": "K卡N卡总表"
-  },
-  {
-    "source": "复杂世界中的领导者成长",
-    "target": "视觉表达钩子"
-  },
-  {
-    "source": "领导力瓶颈不在技能，而在心智复杂度",
-    "target": "成人发展理论"
-  },
-  {
     "source": "领导力瓶颈不在技能，而在心智复杂度",
     "target": "规范主导"
   },
@@ -1467,6 +1096,10 @@ export const LINKS = [
   },
   {
     "source": "领导力瓶颈不在技能，而在心智复杂度",
+    "target": "成人发展理论"
+  },
+  {
+    "source": "领导力瓶颈不在技能，而在心智复杂度",
     "target": "结构与内容"
   },
   {
@@ -1474,36 +1107,8 @@ export const LINKS = [
     "target": "成长边际"
   },
   {
-    "source": "领导力瓶颈不在技能，而在心智复杂度",
-    "target": "领导者的意识进化"
-  },
-  {
-    "source": "领导力瓶颈不在技能，而在心智复杂度",
-    "target": "复杂世界中的领导者成长"
-  },
-  {
-    "source": "领导力瓶颈不在技能，而在心智复杂度",
-    "target": "K卡N卡总表"
-  },
-  {
-    "source": "领导力瓶颈不在技能，而在心智复杂度",
-    "target": "第一章 心智的层次"
-  },
-  {
-    "source": "领导力瓶颈不在技能，而在心智复杂度",
-    "target": "第二章 深入分析心智结构"
-  },
-  {
-    "source": "领导力瓶颈不在技能，而在心智复杂度",
-    "target": "第七章 孕育领导力"
-  },
-  {
     "source": "从结构判断到成长支持：如何找到成长边际",
     "target": "成长边际"
-  },
-  {
-    "source": "从结构判断到成长支持：如何找到成长边际",
-    "target": "结构与内容"
   },
   {
     "source": "从结构判断到成长支持：如何找到成长边际",
@@ -1515,43 +1120,11 @@ export const LINKS = [
   },
   {
     "source": "从结构判断到成长支持：如何找到成长边际",
+    "target": "结构与内容"
+  },
+  {
+    "source": "从结构判断到成长支持：如何找到成长边际",
     "target": "转化性心智习惯"
-  },
-  {
-    "source": "从结构判断到成长支持：如何找到成长边际",
-    "target": "领导者的意识进化"
-  },
-  {
-    "source": "从结构判断到成长支持：如何找到成长边际",
-    "target": "复杂世界中的领导者成长"
-  },
-  {
-    "source": "从结构判断到成长支持：如何找到成长边际",
-    "target": "K卡N卡总表"
-  },
-  {
-    "source": "从结构判断到成长支持：如何找到成长边际",
-    "target": "第三章 寻找成长的边际"
-  },
-  {
-    "source": "从结构判断到成长支持：如何找到成长边际",
-    "target": "第四章 扩展式的成长教练"
-  },
-  {
-    "source": "为什么很多培训回到工作里人却没变",
-    "target": "转化性学习"
-  },
-  {
-    "source": "为什么很多培训回到工作里人却没变",
-    "target": "跨层级空间"
-  },
-  {
-    "source": "为什么很多培训回到工作里人却没变",
-    "target": "转化性心智习惯"
-  },
-  {
-    "source": "为什么很多培训回到工作里人却没变",
-    "target": "工作即成长场"
   },
   {
     "source": "为什么很多培训回到工作里人却没变",
@@ -1559,31 +1132,23 @@ export const LINKS = [
   },
   {
     "source": "为什么很多培训回到工作里人却没变",
-    "target": "发展型会议"
+    "target": "转化性学习"
   },
   {
     "source": "为什么很多培训回到工作里人却没变",
-    "target": "领导者的意识进化"
+    "target": "跨层级空间"
   },
   {
     "source": "为什么很多培训回到工作里人却没变",
-    "target": "复杂世界中的领导者成长"
+    "target": "转化性心智习惯"
   },
   {
     "source": "为什么很多培训回到工作里人却没变",
-    "target": "K卡N卡总表"
-  },
-  {
-    "source": "为什么很多培训回到工作里人却没变",
-    "target": "第五章 专业发展的蜕变"
-  },
-  {
-    "source": "为什么很多培训回到工作里人却没变",
-    "target": "第六章 具转化性的心智习惯"
-  },
-  {
-    "source": "工作现场如何变成发展容器",
     "target": "工作即成长场"
+  },
+  {
+    "source": "为什么很多培训回到工作里人却没变",
+    "target": "发展型会议"
   },
   {
     "source": "工作现场如何变成发展容器",
@@ -1595,35 +1160,15 @@ export const LINKS = [
   },
   {
     "source": "工作现场如何变成发展容器",
+    "target": "工作即成长场"
+  },
+  {
+    "source": "工作现场如何变成发展容器",
     "target": "转化性心智习惯"
   },
   {
     "source": "工作现场如何变成发展容器",
     "target": "复杂世界中的领导者成长"
-  },
-  {
-    "source": "工作现场如何变成发展容器",
-    "target": "领导者的意识进化"
-  },
-  {
-    "source": "工作现场如何变成发展容器",
-    "target": "K卡N卡总表"
-  },
-  {
-    "source": "工作现场如何变成发展容器",
-    "target": "第七章 孕育领导力"
-  },
-  {
-    "source": "工作现场如何变成发展容器",
-    "target": "第八章 孕育智慧"
-  },
-  {
-    "source": "第一章 心智的层次",
-    "target": "全书摘要"
-  },
-  {
-    "source": "第一章 心智的层次",
-    "target": "K卡N卡总表"
   },
   {
     "source": "第一章 心智的层次",
@@ -1651,14 +1196,6 @@ export const LINKS = [
   },
   {
     "source": "第二章 深入分析心智结构",
-    "target": "全书摘要"
-  },
-  {
-    "source": "第二章 深入分析心智结构",
-    "target": "K卡N卡总表"
-  },
-  {
-    "source": "第二章 深入分析心智结构",
     "target": "规范主导"
   },
   {
@@ -1675,10 +1212,6 @@ export const LINKS = [
   },
   {
     "source": "第二章 深入分析心智结构",
-    "target": "边际提问"
-  },
-  {
-    "source": "第二章 深入分析心智结构",
     "target": "发展型教练"
   },
   {
@@ -1688,14 +1221,6 @@ export const LINKS = [
   {
     "source": "第二章 深入分析心智结构",
     "target": "第三章 寻找成长的边际"
-  },
-  {
-    "source": "第三章 寻找成长的边际",
-    "target": "全书摘要"
-  },
-  {
-    "source": "第三章 寻找成长的边际",
-    "target": "K卡N卡总表"
   },
   {
     "source": "第三章 寻找成长的边际",
@@ -1715,27 +1240,11 @@ export const LINKS = [
   },
   {
     "source": "第三章 寻找成长的边际",
-    "target": "主体 - 客体转换"
-  },
-  {
-    "source": "第三章 寻找成长的边际",
     "target": "第二章 深入分析心智结构"
   },
   {
     "source": "第三章 寻找成长的边际",
     "target": "第四章 扩展式的成长教练"
-  },
-  {
-    "source": "第四章 扩展式的成长教练",
-    "target": "全书摘要"
-  },
-  {
-    "source": "第四章 扩展式的成长教练",
-    "target": "K卡N卡总表"
-  },
-  {
-    "source": "第四章 扩展式的成长教练",
-    "target": "边际提问"
   },
   {
     "source": "第四章 扩展式的成长教练",
@@ -1751,6 +1260,10 @@ export const LINKS = [
   },
   {
     "source": "第四章 扩展式的成长教练",
+    "target": "边际提问"
+  },
+  {
+    "source": "第四章 扩展式的成长教练",
     "target": "成长边际"
   },
   {
@@ -1763,14 +1276,6 @@ export const LINKS = [
   },
   {
     "source": "第五章 专业发展的蜕变",
-    "target": "全书摘要"
-  },
-  {
-    "source": "第五章 专业发展的蜕变",
-    "target": "K卡N卡总表"
-  },
-  {
-    "source": "第五章 专业发展的蜕变",
     "target": "信息性学习"
   },
   {
@@ -1779,11 +1284,11 @@ export const LINKS = [
   },
   {
     "source": "第五章 专业发展的蜕变",
-    "target": "发展型教练"
+    "target": "跨层级空间"
   },
   {
     "source": "第五章 专业发展的蜕变",
-    "target": "跨层级空间"
+    "target": "发展型教练"
   },
   {
     "source": "第五章 专业发展的蜕变",
@@ -1792,14 +1297,6 @@ export const LINKS = [
   {
     "source": "第五章 专业发展的蜕变",
     "target": "第六章 具转化性的心智习惯"
-  },
-  {
-    "source": "第六章 具转化性的心智习惯",
-    "target": "全书摘要"
-  },
-  {
-    "source": "第六章 具转化性的心智习惯",
-    "target": "K卡N卡总表"
   },
   {
     "source": "第六章 具转化性的心智习惯",
@@ -1839,23 +1336,11 @@ export const LINKS = [
   },
   {
     "source": "第七章 孕育领导力",
-    "target": "全书摘要"
-  },
-  {
-    "source": "第七章 孕育领导力",
-    "target": "K卡N卡总表"
-  },
-  {
-    "source": "第七章 孕育领导力",
-    "target": "领导力脚手架"
-  },
-  {
-    "source": "第七章 孕育领导力",
     "target": "转化性心智习惯"
   },
   {
     "source": "第七章 孕育领导力",
-    "target": "规律性的正式对话"
+    "target": "领导力脚手架"
   },
   {
     "source": "第七章 孕育领导力",
@@ -1883,19 +1368,11 @@ export const LINKS = [
   },
   {
     "source": "第八章 孕育智慧",
-    "target": "全书摘要"
-  },
-  {
-    "source": "第八章 孕育智慧",
-    "target": "K卡N卡总表"
+    "target": "组织的双重任务"
   },
   {
     "source": "第八章 孕育智慧",
     "target": "众人的任务"
-  },
-  {
-    "source": "第八章 孕育智慧",
-    "target": "组织的双重任务"
   },
   {
     "source": "第八章 孕育智慧",
@@ -1931,35 +1408,7 @@ export const LINKS = [
   },
   {
     "source": "成人发展理论",
-    "target": "工作即成长场"
-  },
-  {
-    "source": "成人发展理论",
-    "target": "领导者的意识进化"
-  },
-  {
-    "source": "成人发展理论",
-    "target": "复杂世界中的领导者成长"
-  },
-  {
-    "source": "成人发展理论",
-    "target": "领导力瓶颈不在技能，而在心智复杂度"
-  },
-  {
-    "source": "成人发展理论",
     "target": "成长边际"
-  },
-  {
-    "source": "成人发展理论",
-    "target": "转化性学习"
-  },
-  {
-    "source": "成人发展理论",
-    "target": "全书摘要"
-  },
-  {
-    "source": "成人发展理论",
-    "target": "第一章 心智的层次"
   },
   {
     "source": "主体 - 客体转换",
@@ -1980,26 +1429,6 @@ export const LINKS = [
   {
     "source": "主体 - 客体转换",
     "target": "第一章 心智的层次"
-  },
-  {
-    "source": "规范主导",
-    "target": "成长边际"
-  },
-  {
-    "source": "规范主导",
-    "target": "发展型教练"
-  },
-  {
-    "source": "规范主导",
-    "target": "领导者的意识进化"
-  },
-  {
-    "source": "规范主导",
-    "target": "复杂世界中的领导者成长"
-  },
-  {
-    "source": "规范主导",
-    "target": "领导力瓶颈不在技能，而在心智复杂度"
   },
   {
     "source": "规范主导",
@@ -2015,15 +1444,11 @@ export const LINKS = [
   },
   {
     "source": "规范主导",
+    "target": "成长边际"
+  },
+  {
+    "source": "规范主导",
     "target": "边际提问"
-  },
-  {
-    "source": "规范主导",
-    "target": "全书摘要"
-  },
-  {
-    "source": "规范主导",
-    "target": "第二章 深入分析心智结构"
   },
   {
     "source": "自主导向",
@@ -2039,35 +1464,11 @@ export const LINKS = [
   },
   {
     "source": "自主导向",
-    "target": "领导者的意识进化"
-  },
-  {
-    "source": "自主导向",
-    "target": "领导力瓶颈不在技能，而在心智复杂度"
-  },
-  {
-    "source": "自主导向",
     "target": "成长边际"
   },
   {
     "source": "自主导向",
     "target": "转化性心智习惯"
-  },
-  {
-    "source": "自主导向",
-    "target": "边际提问"
-  },
-  {
-    "source": "自主导向",
-    "target": "复杂世界中的领导者成长"
-  },
-  {
-    "source": "自主导向",
-    "target": "全书摘要"
-  },
-  {
-    "source": "自主导向",
-    "target": "第二章 深入分析心智结构"
   },
   {
     "source": "内观自变",
@@ -2083,15 +1484,7 @@ export const LINKS = [
   },
   {
     "source": "内观自变",
-    "target": "领导者的意识进化"
-  },
-  {
-    "source": "内观自变",
-    "target": "复杂世界中的领导者成长"
-  },
-  {
-    "source": "内观自变",
-    "target": "领导力瓶颈不在技能，而在心智复杂度"
+    "target": "结构与内容"
   },
   {
     "source": "内观自变",
@@ -2099,15 +1492,7 @@ export const LINKS = [
   },
   {
     "source": "内观自变",
-    "target": "结构与内容"
-  },
-  {
-    "source": "内观自变",
-    "target": "全书摘要"
-  },
-  {
-    "source": "内观自变",
-    "target": "第二章 深入分析心智结构"
+    "target": "领导者的意识进化"
   },
   {
     "source": "结构与内容",
@@ -2116,22 +1501,6 @@ export const LINKS = [
   {
     "source": "结构与内容",
     "target": "成长边际"
-  },
-  {
-    "source": "结构与内容",
-    "target": "发展型教练"
-  },
-  {
-    "source": "结构与内容",
-    "target": "领导者的意识进化"
-  },
-  {
-    "source": "结构与内容",
-    "target": "复杂世界中的领导者成长"
-  },
-  {
-    "source": "结构与内容",
-    "target": "从结构判断到成长支持：如何找到成长边际"
   },
   {
     "source": "结构与内容",
@@ -2150,32 +1519,8 @@ export const LINKS = [
     "target": "内观自变"
   },
   {
-    "source": "结构与内容",
-    "target": "全书摘要"
-  },
-  {
-    "source": "结构与内容",
-    "target": "第三章 寻找成长的边际"
-  },
-  {
     "source": "成长边际",
-    "target": "规范主导"
-  },
-  {
-    "source": "成长边际",
-    "target": "自主导向"
-  },
-  {
-    "source": "成长边际",
-    "target": "领导者的意识进化"
-  },
-  {
-    "source": "成长边际",
-    "target": "复杂世界中的领导者成长"
-  },
-  {
-    "source": "成长边际",
-    "target": "从结构判断到成长支持：如何找到成长边际"
+    "target": "成人发展理论"
   },
   {
     "source": "成长边际",
@@ -2192,22 +1537,6 @@ export const LINKS = [
   {
     "source": "成长边际",
     "target": "工作即成长场"
-  },
-  {
-    "source": "成长边际",
-    "target": "成人发展理论"
-  },
-  {
-    "source": "成长边际",
-    "target": "转化性心智习惯"
-  },
-  {
-    "source": "成长边际",
-    "target": "全书摘要"
-  },
-  {
-    "source": "成长边际",
-    "target": "第三章 寻找成长的边际"
   },
   {
     "source": "转化性学习",
@@ -2223,11 +1552,7 @@ export const LINKS = [
   },
   {
     "source": "转化性学习",
-    "target": "领导者的意识进化"
-  },
-  {
-    "source": "转化性学习",
-    "target": "为什么很多培训回到工作里人却没变"
+    "target": "成人发展理论"
   },
   {
     "source": "转化性学习",
@@ -2235,23 +1560,7 @@ export const LINKS = [
   },
   {
     "source": "转化性学习",
-    "target": "成人发展理论"
-  },
-  {
-    "source": "转化性学习",
-    "target": "复杂世界中的领导者成长"
-  },
-  {
-    "source": "转化性学习",
-    "target": "K卡N卡总表"
-  },
-  {
-    "source": "转化性学习",
-    "target": "第五章 专业发展的蜕变"
-  },
-  {
-    "source": "转化性学习",
-    "target": "全书摘要"
+    "target": "领导者的意识进化"
   },
   {
     "source": "跨层级空间",
@@ -2260,10 +1569,6 @@ export const LINKS = [
   {
     "source": "跨层级空间",
     "target": "发展型教练"
-  },
-  {
-    "source": "跨层级空间",
-    "target": "为什么很多培训回到工作里人却没变"
   },
   {
     "source": "跨层级空间",
@@ -2276,22 +1581,6 @@ export const LINKS = [
   {
     "source": "跨层级空间",
     "target": "领导者的意识进化"
-  },
-  {
-    "source": "跨层级空间",
-    "target": "复杂世界中的领导者成长"
-  },
-  {
-    "source": "跨层级空间",
-    "target": "K卡N卡总表"
-  },
-  {
-    "source": "跨层级空间",
-    "target": "第五章 专业发展的蜕变"
-  },
-  {
-    "source": "跨层级空间",
-    "target": "全书摘要"
   },
   {
     "source": "转化性心智习惯",
@@ -2311,27 +1600,11 @@ export const LINKS = [
   },
   {
     "source": "转化性心智习惯",
-    "target": "工作即成长场"
-  },
-  {
-    "source": "转化性心智习惯",
-    "target": "发展型会议"
-  },
-  {
-    "source": "转化性心智习惯",
-    "target": "为什么很多培训回到工作里人却没变"
-  },
-  {
-    "source": "转化性心智习惯",
-    "target": "领导者的意识进化"
-  },
-  {
-    "source": "转化性心智习惯",
     "target": "转化性学习"
   },
   {
     "source": "转化性心智习惯",
-    "target": "反馈后学习"
+    "target": "工作即成长场"
   },
   {
     "source": "转化性心智习惯",
@@ -2342,18 +1615,6 @@ export const LINKS = [
     "target": "内观自变"
   },
   {
-    "source": "转化性心智习惯",
-    "target": "复杂世界中的领导者成长"
-  },
-  {
-    "source": "转化性心智习惯",
-    "target": "全书摘要"
-  },
-  {
-    "source": "转化性心智习惯",
-    "target": "第六章 具转化性的心智习惯"
-  },
-  {
     "source": "工作即成长场",
     "target": "反馈后学习"
   },
@@ -2363,15 +1624,7 @@ export const LINKS = [
   },
   {
     "source": "工作即成长场",
-    "target": "工作现场如何变成发展容器"
-  },
-  {
-    "source": "工作即成长场",
-    "target": "复杂世界中的领导者成长"
-  },
-  {
-    "source": "工作即成长场",
-    "target": "领导者的意识进化"
+    "target": "成长边际"
   },
   {
     "source": "工作即成长场",
@@ -2379,23 +1632,7 @@ export const LINKS = [
   },
   {
     "source": "工作即成长场",
-    "target": "成长边际"
-  },
-  {
-    "source": "工作即成长场",
     "target": "结构与内容"
-  },
-  {
-    "source": "工作即成长场",
-    "target": "全书摘要"
-  },
-  {
-    "source": "工作即成长场",
-    "target": "第八章 孕育智慧"
-  },
-  {
-    "source": "工作即成长场",
-    "target": "视觉表达钩子"
   },
   {
     "source": "信息性学习",
@@ -2407,7 +1644,7 @@ export const LINKS = [
   },
   {
     "source": "信息性学习",
-    "target": "为什么很多培训回到工作里人却没变"
+    "target": "跨层级空间"
   },
   {
     "source": "信息性学习",
@@ -2415,19 +1652,7 @@ export const LINKS = [
   },
   {
     "source": "信息性学习",
-    "target": "跨层级空间"
-  },
-  {
-    "source": "信息性学习",
-    "target": "K卡N卡总表"
-  },
-  {
-    "source": "信息性学习",
-    "target": "第五章 专业发展的蜕变"
-  },
-  {
-    "source": "信息性学习",
-    "target": "全书摘要"
+    "target": "为什么很多培训回到工作里人却没变"
   },
   {
     "source": "接纳多面向观点",
@@ -2440,14 +1665,6 @@ export const LINKS = [
   {
     "source": "接纳多面向观点",
     "target": "规律性的正式对话"
-  },
-  {
-    "source": "接纳多面向观点",
-    "target": "复杂世界中的领导者成长"
-  },
-  {
-    "source": "接纳多面向观点",
-    "target": "领导者的意识进化"
   },
   {
     "source": "接纳多面向观点",
@@ -2459,15 +1676,7 @@ export const LINKS = [
   },
   {
     "source": "接纳多面向观点",
-    "target": "K卡N卡总表"
-  },
-  {
-    "source": "接纳多面向观点",
-    "target": "第六章 具转化性的心智习惯"
-  },
-  {
-    "source": "接纳多面向观点",
-    "target": "全书摘要"
+    "target": "复杂世界中的领导者成长"
   },
   {
     "source": "看见系统全貌",
@@ -2479,18 +1688,6 @@ export const LINKS = [
   },
   {
     "source": "看见系统全貌",
-    "target": "复杂世界中的领导者成长"
-  },
-  {
-    "source": "看见系统全貌",
-    "target": "工作现场如何变成发展容器"
-  },
-  {
-    "source": "看见系统全貌",
-    "target": "领导者的意识进化"
-  },
-  {
-    "source": "看见系统全貌",
     "target": "转化性心智习惯"
   },
   {
@@ -2499,15 +1696,7 @@ export const LINKS = [
   },
   {
     "source": "看见系统全貌",
-    "target": "K卡N卡总表"
-  },
-  {
-    "source": "看见系统全貌",
-    "target": "第六章 具转化性的心智习惯"
-  },
-  {
-    "source": "看见系统全貌",
-    "target": "全书摘要"
+    "target": "复杂世界中的领导者成长"
   },
   {
     "source": "组织的双重任务",
@@ -2519,19 +1708,7 @@ export const LINKS = [
   },
   {
     "source": "组织的双重任务",
-    "target": "工作现场如何变成发展容器"
-  },
-  {
-    "source": "组织的双重任务",
-    "target": "领导者的意识进化"
-  },
-  {
-    "source": "组织的双重任务",
     "target": "众人的任务"
-  },
-  {
-    "source": "组织的双重任务",
-    "target": "规律性的正式对话"
   },
   {
     "source": "组织的双重任务",
@@ -2539,15 +1716,7 @@ export const LINKS = [
   },
   {
     "source": "组织的双重任务",
-    "target": "K卡N卡总表"
-  },
-  {
-    "source": "组织的双重任务",
-    "target": "第八章 孕育智慧"
-  },
-  {
-    "source": "组织的双重任务",
-    "target": "全书摘要"
+    "target": "工作现场如何变成发展容器"
   },
   {
     "source": "众人的任务",
@@ -2559,14 +1728,6 @@ export const LINKS = [
   },
   {
     "source": "众人的任务",
-    "target": "工作现场如何变成发展容器"
-  },
-  {
-    "source": "众人的任务",
-    "target": "领导者的意识进化"
-  },
-  {
-    "source": "众人的任务",
     "target": "工作即成长场"
   },
   {
@@ -2575,19 +1736,7 @@ export const LINKS = [
   },
   {
     "source": "众人的任务",
-    "target": "K卡N卡总表"
-  },
-  {
-    "source": "众人的任务",
-    "target": "第八章 孕育智慧"
-  },
-  {
-    "source": "众人的任务",
-    "target": "全书摘要"
-  },
-  {
-    "source": "边际提问",
-    "target": "成长边际"
+    "target": "工作现场如何变成发展容器"
   },
   {
     "source": "边际提问",
@@ -2595,7 +1744,7 @@ export const LINKS = [
   },
   {
     "source": "边际提问",
-    "target": "从结构判断到成长支持：如何找到成长边际"
+    "target": "成长边际"
   },
   {
     "source": "边际提问",
@@ -2603,27 +1752,11 @@ export const LINKS = [
   },
   {
     "source": "边际提问",
-    "target": "领导者的意识进化"
-  },
-  {
-    "source": "边际提问",
     "target": "转化性心智习惯"
   },
   {
     "source": "边际提问",
-    "target": "复杂世界中的领导者成长"
-  },
-  {
-    "source": "边际提问",
-    "target": "K卡N卡总表"
-  },
-  {
-    "source": "边际提问",
-    "target": "第三章 寻找成长的边际"
-  },
-  {
-    "source": "边际提问",
-    "target": "第四章 扩展式的成长教练"
+    "target": "领导者的意识进化"
   },
   {
     "source": "发展型教练",
@@ -2631,27 +1764,7 @@ export const LINKS = [
   },
   {
     "source": "发展型教练",
-    "target": "规范主导"
-  },
-  {
-    "source": "发展型教练",
-    "target": "自主导向"
-  },
-  {
-    "source": "发展型教练",
-    "target": "内观自变"
-  },
-  {
-    "source": "发展型教练",
     "target": "边际提问"
-  },
-  {
-    "source": "发展型教练",
-    "target": "从结构判断到成长支持：如何找到成长边际"
-  },
-  {
-    "source": "发展型教练",
-    "target": "领导者的意识进化"
   },
   {
     "source": "发展型教练",
@@ -2663,19 +1776,7 @@ export const LINKS = [
   },
   {
     "source": "发展型教练",
-    "target": "复杂世界中的领导者成长"
-  },
-  {
-    "source": "发展型教练",
-    "target": "K卡N卡总表"
-  },
-  {
-    "source": "发展型教练",
-    "target": "第四章 扩展式的成长教练"
-  },
-  {
-    "source": "发展型教练",
-    "target": "全书摘要"
+    "target": "领导者的意识进化"
   },
   {
     "source": "反馈后学习",
@@ -2687,7 +1788,7 @@ export const LINKS = [
   },
   {
     "source": "反馈后学习",
-    "target": "工作现场如何变成发展容器"
+    "target": "转化性心智习惯"
   },
   {
     "source": "反馈后学习",
@@ -2695,27 +1796,7 @@ export const LINKS = [
   },
   {
     "source": "反馈后学习",
-    "target": "转化性心智习惯"
-  },
-  {
-    "source": "反馈后学习",
     "target": "复杂世界中的领导者成长"
-  },
-  {
-    "source": "反馈后学习",
-    "target": "K卡N卡总表"
-  },
-  {
-    "source": "反馈后学习",
-    "target": "第七章 孕育领导力"
-  },
-  {
-    "source": "反馈后学习",
-    "target": "全书摘要"
-  },
-  {
-    "source": "发展型会议",
-    "target": "工作现场如何变成发展容器"
   },
   {
     "source": "发展型会议",
@@ -2731,27 +1812,11 @@ export const LINKS = [
   },
   {
     "source": "发展型会议",
-    "target": "领导者的意识进化"
-  },
-  {
-    "source": "发展型会议",
     "target": "转化性心智习惯"
   },
   {
     "source": "发展型会议",
-    "target": "复杂世界中的领导者成长"
-  },
-  {
-    "source": "发展型会议",
-    "target": "K卡N卡总表"
-  },
-  {
-    "source": "发展型会议",
-    "target": "第八章 孕育智慧"
-  },
-  {
-    "source": "发展型会议",
-    "target": "全书摘要"
+    "target": "领导者的意识进化"
   },
   {
     "source": "提出不同问题",
@@ -2767,7 +1832,7 @@ export const LINKS = [
   },
   {
     "source": "提出不同问题",
-    "target": "从结构判断到成长支持：如何找到成长边际"
+    "target": "转化性心智习惯"
   },
   {
     "source": "提出不同问题",
@@ -2775,19 +1840,7 @@ export const LINKS = [
   },
   {
     "source": "提出不同问题",
-    "target": "转化性心智习惯"
-  },
-  {
-    "source": "提出不同问题",
-    "target": "K卡N卡总表"
-  },
-  {
-    "source": "提出不同问题",
-    "target": "第六章 具转化性的心智习惯"
-  },
-  {
-    "source": "提出不同问题",
-    "target": "全书摘要"
+    "target": "从结构判断到成长支持：如何找到成长边际"
   },
   {
     "source": "领导力脚手架",
@@ -2803,35 +1856,11 @@ export const LINKS = [
   },
   {
     "source": "领导力脚手架",
-    "target": "从结构判断到成长支持：如何找到成长边际"
-  },
-  {
-    "source": "领导力脚手架",
-    "target": "工作现场如何变成发展容器"
-  },
-  {
-    "source": "领导力脚手架",
-    "target": "领导者的意识进化"
-  },
-  {
-    "source": "领导力脚手架",
     "target": "发展型会议"
   },
   {
     "source": "领导力脚手架",
-    "target": "反馈后学习"
-  },
-  {
-    "source": "领导力脚手架",
-    "target": "K卡N卡总表"
-  },
-  {
-    "source": "领导力脚手架",
-    "target": "第四章 扩展式的成长教练"
-  },
-  {
-    "source": "领导力脚手架",
-    "target": "第八章 孕育智慧"
+    "target": "从结构判断到成长支持：如何找到成长边际"
   },
   {
     "source": "规律性的正式对话",
@@ -2848,14 +1877,6 @@ export const LINKS = [
   {
     "source": "规律性的正式对话",
     "target": "工作即成长场"
-  },
-  {
-    "source": "规律性的正式对话",
-    "target": "工作现场如何变成发展容器"
-  },
-  {
-    "source": "规律性的正式对话",
-    "target": "领导者的意识进化"
   },
   {
     "source": "规律性的正式对话",
@@ -2863,15 +1884,7 @@ export const LINKS = [
   },
   {
     "source": "规律性的正式对话",
-    "target": "K卡N卡总表"
-  },
-  {
-    "source": "规律性的正式对话",
-    "target": "第八章 孕育智慧"
-  },
-  {
-    "source": "规律性的正式对话",
-    "target": "全书摘要"
+    "target": "工作现场如何变成发展容器"
   },
   {
     "source": "培训做了不少，行为和判断却没真正变",
@@ -2908,6 +1921,18 @@ export const LINKS = [
   {
     "source": "培训做了不少，行为和判断却没真正变",
     "target": "第八章 孕育智慧"
+  },
+  {
+    "source": "培训做了不少，行为和判断却没真正变",
+    "target": "全书导读"
+  },
+  {
+    "source": "培训做了不少，行为和判断却没真正变",
+    "target": "全书脉络"
+  },
+  {
+    "source": "培训做了不少，行为和判断却没真正变",
+    "target": "领导者的意识进化"
   },
   {
     "source": "同一场会议里，不同人像活在不同宇宙",
@@ -2936,6 +1961,18 @@ export const LINKS = [
   {
     "source": "同一场会议里，不同人像活在不同宇宙",
     "target": "第三章 寻找成长的边际"
+  },
+  {
+    "source": "同一场会议里，不同人像活在不同宇宙",
+    "target": "全书导读"
+  },
+  {
+    "source": "同一场会议里，不同人像活在不同宇宙",
+    "target": "全书脉络"
+  },
+  {
+    "source": "同一场会议里，不同人像活在不同宇宙",
+    "target": "领导者的意识进化"
   },
   {
     "source": "领导总想用格局不够一句话解释别人",
@@ -2958,6 +1995,18 @@ export const LINKS = [
     "target": "第三章 寻找成长的边际"
   },
   {
+    "source": "领导总想用格局不够一句话解释别人",
+    "target": "全书导读"
+  },
+  {
+    "source": "领导总想用格局不够一句话解释别人",
+    "target": "全书脉络"
+  },
+  {
+    "source": "领导总想用格局不够一句话解释别人",
+    "target": "领导者的意识进化"
+  },
+  {
     "source": "给了很多反馈，对方却越来越防御",
     "target": "反馈后学习"
   },
@@ -2976,6 +2025,18 @@ export const LINKS = [
   {
     "source": "给了很多反馈，对方却越来越防御",
     "target": "第七章 孕育领导力"
+  },
+  {
+    "source": "给了很多反馈，对方却越来越防御",
+    "target": "全书导读"
+  },
+  {
+    "source": "给了很多反馈，对方却越来越防御",
+    "target": "全书脉络"
+  },
+  {
+    "source": "给了很多反馈，对方却越来越防御",
+    "target": "领导者的意识进化"
   },
   {
     "source": "明明很努力提问，却总问不出推动成长的问题",
@@ -2998,6 +2059,18 @@ export const LINKS = [
     "target": "第四章 扩展式的成长教练"
   },
   {
+    "source": "明明很努力提问，却总问不出推动成长的问题",
+    "target": "全书导读"
+  },
+  {
+    "source": "明明很努力提问，却总问不出推动成长的问题",
+    "target": "全书脉络"
+  },
+  {
+    "source": "明明很努力提问，却总问不出推动成长的问题",
+    "target": "领导者的意识进化"
+  },
+  {
     "source": "一个自主导向的领导者，对规范主导的同事越来越没耐心",
     "target": "规范主导"
   },
@@ -3014,6 +2087,18 @@ export const LINKS = [
     "target": "第二章 深入分析心智结构"
   },
   {
+    "source": "一个自主导向的领导者，对规范主导的同事越来越没耐心",
+    "target": "全书导读"
+  },
+  {
+    "source": "一个自主导向的领导者，对规范主导的同事越来越没耐心",
+    "target": "全书脉络"
+  },
+  {
+    "source": "一个自主导向的领导者，对规范主导的同事越来越没耐心",
+    "target": "领导者的意识进化"
+  },
+  {
     "source": "会议耗掉很多时间，但没人觉得自己真正学到了东西",
     "target": "发展型会议"
   },
@@ -3028,6 +2113,18 @@ export const LINKS = [
   {
     "source": "会议耗掉很多时间，但没人觉得自己真正学到了东西",
     "target": "第八章 孕育智慧"
+  },
+  {
+    "source": "会议耗掉很多时间，但没人觉得自己真正学到了东西",
+    "target": "全书导读"
+  },
+  {
+    "source": "会议耗掉很多时间，但没人觉得自己真正学到了东西",
+    "target": "全书脉络"
+  },
+  {
+    "source": "会议耗掉很多时间，但没人觉得自己真正学到了东西",
+    "target": "领导者的意识进化"
   },
   {
     "source": "组织想要更复杂的人才，却仍用旧式控制和单一答案管理他们",
@@ -3062,12 +2159,24 @@ export const LINKS = [
     "target": "第八章 孕育智慧"
   },
   {
-    "source": "Jennifer Garvey Berger（珍妮弗·加维·伯格）",
-    "target": "全书摘要"
+    "source": "组织想要更复杂的人才，却仍用旧式控制和单一答案管理他们",
+    "target": "全书导读"
+  },
+  {
+    "source": "组织想要更复杂的人才，却仍用旧式控制和单一答案管理他们",
+    "target": "全书脉络"
+  },
+  {
+    "source": "组织想要更复杂的人才，却仍用旧式控制和单一答案管理他们",
+    "target": "领导者的意识进化"
   },
   {
     "source": "Jennifer Garvey Berger（珍妮弗·加维·伯格）",
-    "target": "全书论证链"
+    "target": "全书导读"
+  },
+  {
+    "source": "Jennifer Garvey Berger（珍妮弗·加维·伯格）",
+    "target": "全书脉络"
   },
   {
     "source": "Jennifer Garvey Berger（珍妮弗·加维·伯格）",
@@ -3080,134 +2189,56 @@ export const LINKS = [
 ]
 
 export const LINK_LABELS = {
-  "全书摘要→领导者的意识进化": "主题关联",
-  "全书摘要→Jennifer Garvey Berger（珍妮弗·加维·伯格）": "主题关联",
-  "全书摘要→成人发展理论": "主题关联",
-  "全书摘要→第一章 心智的层次": "主题关联",
-  "全书摘要→第二章 深入分析心智结构": "主题关联",
-  "全书摘要→规范主导": "主题关联",
-  "全书摘要→自主导向": "主题关联",
-  "全书摘要→内观自变": "主题关联",
-  "全书摘要→成长边际": "主题关联",
-  "全书摘要→第三章 寻找成长的边际": "主题关联",
-  "全书摘要→第四章 扩展式的成长教练": "主题关联",
-  "全书摘要→第五章 专业发展的蜕变": "主题关联",
-  "全书摘要→跨层级空间": "主题关联",
-  "全书摘要→转化性学习": "主题关联",
-  "全书摘要→第六章 具转化性的心智习惯": "主题关联",
-  "全书摘要→提出不同问题": "主题关联",
-  "全书摘要→接纳多面向观点": "主题关联",
-  "全书摘要→看见系统全貌": "主题关联",
-  "全书摘要→第七章 孕育领导力": "主题关联",
-  "全书摘要→第八章 孕育智慧": "主题关联",
-  "全书摘要→众人的任务": "主题关联",
-  "全书摘要→主体 - 客体转换": "主题关联",
-  "全书摘要→发展型教练": "主题关联",
-  "全书摘要→结构与内容": "主题关联",
-  "全书摘要→转化性心智习惯": "主题关联",
-  "全书摘要→反馈后学习": "主题关联",
-  "全书摘要→发展型会议": "主题关联",
-  "全书摘要→工作即成长场": "主题关联",
-  "全书摘要→全书论证链": "主题关联",
-  "全书论证链→成人发展理论": "主题关联",
-  "全书论证链→规范主导": "主题关联",
-  "全书论证链→自主导向": "主题关联",
-  "全书论证链→内观自变": "主题关联",
-  "全书论证链→结构与内容": "主题关联",
-  "全书论证链→成长边际": "主题关联",
-  "全书论证链→转化性心智习惯": "主题关联",
-  "全书论证链→领导者的意识进化": "主题关联",
-  "全书论证链→第一章 心智的层次": "主题关联",
-  "全书论证链→第三章 寻找成长的边际": "主题关联",
-  "全书论证链→第八章 孕育智慧": "主题关联",
-  "K卡N卡总表→领导者的意识进化": "主题关联",
-  "K卡N卡总表→复杂世界中的领导者成长": "主题关联",
-  "K卡N卡总表→领导力瓶颈不在技能，而在心智复杂度": "主题关联",
-  "K卡N卡总表→从结构判断到成长支持：如何找到成长边际": "主题关联",
-  "K卡N卡总表→为什么很多培训回到工作里人却没变": "主题关联",
-  "K卡N卡总表→工作现场如何变成发展容器": "主题关联",
-  "K卡N卡总表→成人发展理论": "主题关联",
-  "K卡N卡总表→规范主导": "主题关联",
-  "K卡N卡总表→自主导向": "主题关联",
-  "K卡N卡总表→内观自变": "主题关联",
-  "K卡N卡总表→结构与内容": "主题关联",
-  "K卡N卡总表→成长边际": "主题关联",
-  "K卡N卡总表→转化性心智习惯": "主题关联",
-  "K卡N卡总表→工作即成长场": "主题关联",
-  "K卡N卡总表→转化性学习": "主题关联",
-  "K卡N卡总表→跨层级空间": "主题关联",
-  "K卡N卡总表→发展型教练": "主题关联",
-  "K卡N卡总表→边际提问": "主题关联",
-  "K卡N卡总表→反馈后学习": "主题关联",
-  "K卡N卡总表→发展型会议": "主题关联",
-  "K卡N卡总表→信息性学习": "主题关联",
-  "K卡N卡总表→提出不同问题": "主题关联",
-  "K卡N卡总表→接纳多面向观点": "主题关联",
-  "K卡N卡总表→看见系统全貌": "主题关联",
-  "K卡N卡总表→领导力脚手架": "主题关联",
-  "K卡N卡总表→组织的双重任务": "主题关联",
-  "K卡N卡总表→众人的任务": "主题关联",
-  "K卡N卡总表→规律性的正式对话": "主题关联",
-  "K卡N卡总表→第一章 心智的层次": "主题关联",
-  "K卡N卡总表→第二章 深入分析心智结构": "主题关联",
-  "K卡N卡总表→第三章 寻找成长的边际": "主题关联",
-  "K卡N卡总表→第四章 扩展式的成长教练": "主题关联",
-  "K卡N卡总表→第五章 专业发展的蜕变": "主题关联",
-  "K卡N卡总表→第六章 具转化性的心智习惯": "主题关联",
-  "K卡N卡总表→第七章 孕育领导力": "主题关联",
-  "K卡N卡总表→第八章 孕育智慧": "主题关联",
-  "K卡N卡总表→主体 - 客体转换": "主题关联",
-  "内容选题角度→成人发展理论": "主题关联",
-  "内容选题角度→规范主导": "主题关联",
-  "内容选题角度→自主导向": "主题关联",
-  "内容选题角度→内观自变": "主题关联",
-  "内容选题角度→工作即成长场": "主题关联",
-  "内容选题角度→成长边际": "主题关联",
-  "内容选题角度→转化性心智习惯": "主题关联",
-  "内容选题角度→反馈后学习": "主题关联",
-  "内容选题角度→发展型会议": "主题关联",
-  "内容选题角度→结构与内容": "主题关联",
-  "内容选题角度→转化性学习": "主题关联",
-  "内容选题角度→跨层级空间": "主题关联",
-  "内容选题角度→提出不同问题": "主题关联",
-  "内容选题角度→接纳多面向观点": "主题关联",
-  "内容选题角度→看见系统全貌": "主题关联",
-  "内容选题角度→发展型教练": "主题关联",
-  "内容选题角度→主体 - 客体转换": "主题关联",
-  "内容选题角度→组织的双重任务": "主题关联",
-  "内容选题角度→领导者的意识进化": "主题关联",
-  "内容选题角度→复杂世界中的领导者成长": "主题关联",
-  "内容选题角度→领导力瓶颈不在技能，而在心智复杂度": "主题关联",
-  "内容选题角度→从结构判断到成长支持：如何找到成长边际": "主题关联",
-  "内容选题角度→为什么很多培训回到工作里人却没变": "主题关联",
-  "内容选题角度→工作现场如何变成发展容器": "主题关联",
-  "视觉表达钩子→规范主导": "主题关联",
-  "视觉表达钩子→自主导向": "主题关联",
-  "视觉表达钩子→内观自变": "主题关联",
-  "视觉表达钩子→成长边际": "主题关联",
-  "视觉表达钩子→主体 - 客体转换": "主题关联",
-  "视觉表达钩子→转化性学习": "主题关联",
-  "视觉表达钩子→转化性心智习惯": "主题关联",
-  "视觉表达钩子→提出不同问题": "主题关联",
-  "视觉表达钩子→接纳多面向观点": "主题关联",
-  "视觉表达钩子→看见系统全貌": "主题关联",
-  "视觉表达钩子→反馈后学习": "主题关联",
-  "视觉表达钩子→工作即成长场": "主题关联",
-  "视觉表达钩子→第一章 心智的层次": "主题关联",
-  "视觉表达钩子→第二章 深入分析心智结构": "主题关联",
-  "视觉表达钩子→第三章 寻找成长的边际": "主题关联",
-  "视觉表达钩子→第四章 扩展式的成长教练": "主题关联",
-  "视觉表达钩子→第五章 专业发展的蜕变": "主题关联",
-  "视觉表达钩子→第六章 具转化性的心智习惯": "主题关联",
-  "视觉表达钩子→第七章 孕育领导力": "主题关联",
-  "视觉表达钩子→第八章 孕育智慧": "主题关联",
-  "领导者的意识进化→Jennifer Garvey Berger（珍妮弗·加维·伯格）": "主题关联",
-  "领导者的意识进化→成人发展理论": "主题关联",
+  "全书导读→成人发展理论": "主题关联",
+  "全书导读→规范主导": "主题关联",
+  "全书导读→自主导向": "主题关联",
+  "全书导读→内观自变": "主题关联",
+  "全书导读→全书脉络": "主题关联",
+  "全书导读→领导者的意识进化": "主题关联",
+  "全书导读→第一章 心智的层次": "主题关联",
+  "全书导读→第八章 孕育智慧": "主题关联",
+  "全书脉络→成人发展理论": "主题关联",
+  "全书脉络→规范主导": "主题关联",
+  "全书脉络→自主导向": "主题关联",
+  "全书脉络→内观自变": "主题关联",
+  "全书脉络→结构与内容": "主题关联",
+  "全书脉络→成长边际": "主题关联",
+  "全书脉络→转化性心智习惯": "主题关联",
+  "全书脉络→领导者的意识进化": "主题关联",
+  "全书脉络→第一章 心智的层次": "主题关联",
+  "全书脉络→第三章 寻找成长的边际": "主题关联",
+  "全书脉络→第八章 孕育智慧": "主题关联",
+  "核心内容总览→全书导读": "主题关联",
+  "核心内容总览→全书脉络": "主题关联",
+  "核心内容总览→工作即成长场": "主题关联",
+  "核心内容总览→领导者的意识进化": "主题关联",
+  "核心内容总览→复杂世界中的领导者成长": "主题关联",
+  "核心内容总览→领导力瓶颈不在技能，而在心智复杂度": "主题关联",
+  "核心内容总览→从结构判断到成长支持：如何找到成长边际": "主题关联",
+  "核心内容总览→成长边际": "主题关联",
+  "核心内容总览→为什么很多培训回到工作里人却没变": "主题关联",
+  "核心内容总览→成人发展理论": "主题关联",
+  "核心内容总览→主体 - 客体转换": "主题关联",
+  "核心内容总览→规范主导": "主题关联",
+  "核心内容总览→自主导向": "主题关联",
+  "核心内容总览→内观自变": "主题关联",
+  "核心内容总览→结构与内容": "主题关联",
+  "核心内容总览→边际提问": "主题关联",
+  "核心内容总览→发展型教练": "主题关联",
+  "核心内容总览→反馈后学习": "主题关联",
+  "核心内容总览→发展型会议": "主题关联",
+  "核心内容总览→提出不同问题": "主题关联",
+  "核心内容总览→培训做了不少，行为和判断却没真正变": "主题关联",
+  "核心内容总览→同一场会议里，不同人像活在不同宇宙": "主题关联",
+  "核心内容总览→领导总想用格局不够一句话解释别人": "主题关联",
+  "核心内容总览→给了很多反馈，对方却越来越防御": "主题关联",
   "领导者的意识进化→规范主导": "主题关联",
   "领导者的意识进化→自主导向": "主题关联",
   "领导者的意识进化→内观自变": "主题关联",
-  "领导者的意识进化→结构与内容": "主题关联",
   "领导者的意识进化→成长边际": "主题关联",
+  "领导者的意识进化→Jennifer Garvey Berger（珍妮弗·加维·伯格）": "主题关联",
+  "领导者的意识进化→成人发展理论": "主题关联",
+  "领导者的意识进化→结构与内容": "主题关联",
   "领导者的意识进化→边际提问": "主题关联",
   "领导者的意识进化→发展型教练": "主题关联",
   "领导者的意识进化→转化性学习": "主题关联",
@@ -3221,9 +2252,6 @@ export const LINK_LABELS = {
   "领导者的意识进化→从结构判断到成长支持：如何找到成长边际": "主题关联",
   "领导者的意识进化→为什么很多培训回到工作里人却没变": "主题关联",
   "领导者的意识进化→工作现场如何变成发展容器": "主题关联",
-  "领导者的意识进化→全书摘要": "主题关联",
-  "领导者的意识进化→K卡N卡总表": "主题关联",
-  "领导者的意识进化→视觉表达钩子": "主题关联",
   "复杂世界中的领导者成长→领导者的意识进化": "主题关联",
   "复杂世界中的领导者成长→成人发展理论": "主题关联",
   "复杂世界中的领导者成长→结构与内容": "主题关联",
@@ -3243,97 +2271,60 @@ export const LINK_LABELS = {
   "复杂世界中的领导者成长→从结构判断到成长支持：如何找到成长边际": "主题关联",
   "复杂世界中的领导者成长→为什么很多培训回到工作里人却没变": "主题关联",
   "复杂世界中的领导者成长→工作现场如何变成发展容器": "主题关联",
-  "复杂世界中的领导者成长→全书摘要": "主题关联",
-  "复杂世界中的领导者成长→K卡N卡总表": "主题关联",
-  "复杂世界中的领导者成长→视觉表达钩子": "主题关联",
-  "领导力瓶颈不在技能，而在心智复杂度→成人发展理论": "主题关联",
   "领导力瓶颈不在技能，而在心智复杂度→规范主导": "主题关联",
   "领导力瓶颈不在技能，而在心智复杂度→自主导向": "主题关联",
   "领导力瓶颈不在技能，而在心智复杂度→内观自变": "主题关联",
+  "领导力瓶颈不在技能，而在心智复杂度→成人发展理论": "主题关联",
   "领导力瓶颈不在技能，而在心智复杂度→结构与内容": "主题关联",
   "领导力瓶颈不在技能，而在心智复杂度→成长边际": "主题关联",
-  "领导力瓶颈不在技能，而在心智复杂度→领导者的意识进化": "主题关联",
-  "领导力瓶颈不在技能，而在心智复杂度→复杂世界中的领导者成长": "主题关联",
-  "领导力瓶颈不在技能，而在心智复杂度→K卡N卡总表": "主题关联",
-  "领导力瓶颈不在技能，而在心智复杂度→第一章 心智的层次": "主题关联",
-  "领导力瓶颈不在技能，而在心智复杂度→第二章 深入分析心智结构": "主题关联",
-  "领导力瓶颈不在技能，而在心智复杂度→第七章 孕育领导力": "主题关联",
   "从结构判断到成长支持：如何找到成长边际→成长边际": "主题关联",
-  "从结构判断到成长支持：如何找到成长边际→结构与内容": "主题关联",
   "从结构判断到成长支持：如何找到成长边际→边际提问": "主题关联",
   "从结构判断到成长支持：如何找到成长边际→发展型教练": "主题关联",
+  "从结构判断到成长支持：如何找到成长边际→结构与内容": "主题关联",
   "从结构判断到成长支持：如何找到成长边际→转化性心智习惯": "主题关联",
-  "从结构判断到成长支持：如何找到成长边际→领导者的意识进化": "主题关联",
-  "从结构判断到成长支持：如何找到成长边际→复杂世界中的领导者成长": "主题关联",
-  "从结构判断到成长支持：如何找到成长边际→K卡N卡总表": "主题关联",
-  "从结构判断到成长支持：如何找到成长边际→第三章 寻找成长的边际": "主题关联",
-  "从结构判断到成长支持：如何找到成长边际→第四章 扩展式的成长教练": "主题关联",
+  "为什么很多培训回到工作里人却没变→信息性学习": "主题关联",
   "为什么很多培训回到工作里人却没变→转化性学习": "主题关联",
   "为什么很多培训回到工作里人却没变→跨层级空间": "主题关联",
   "为什么很多培训回到工作里人却没变→转化性心智习惯": "主题关联",
   "为什么很多培训回到工作里人却没变→工作即成长场": "主题关联",
-  "为什么很多培训回到工作里人却没变→信息性学习": "主题关联",
   "为什么很多培训回到工作里人却没变→发展型会议": "主题关联",
-  "为什么很多培训回到工作里人却没变→领导者的意识进化": "主题关联",
-  "为什么很多培训回到工作里人却没变→复杂世界中的领导者成长": "主题关联",
-  "为什么很多培训回到工作里人却没变→K卡N卡总表": "主题关联",
-  "为什么很多培训回到工作里人却没变→第五章 专业发展的蜕变": "主题关联",
-  "为什么很多培训回到工作里人却没变→第六章 具转化性的心智习惯": "主题关联",
-  "工作现场如何变成发展容器→工作即成长场": "主题关联",
   "工作现场如何变成发展容器→反馈后学习": "主题关联",
   "工作现场如何变成发展容器→发展型会议": "主题关联",
+  "工作现场如何变成发展容器→工作即成长场": "主题关联",
   "工作现场如何变成发展容器→转化性心智习惯": "主题关联",
   "工作现场如何变成发展容器→复杂世界中的领导者成长": "主题关联",
-  "工作现场如何变成发展容器→领导者的意识进化": "主题关联",
-  "工作现场如何变成发展容器→K卡N卡总表": "主题关联",
-  "工作现场如何变成发展容器→第七章 孕育领导力": "主题关联",
-  "工作现场如何变成发展容器→第八章 孕育智慧": "主题关联",
-  "第一章 心智的层次→全书摘要": "章节关联",
-  "第一章 心智的层次→K卡N卡总表": "章节关联",
   "第一章 心智的层次→主体 - 客体转换": "章节关联",
   "第一章 心智的层次→成长边际": "章节关联",
   "第一章 心智的层次→结构与内容": "章节关联",
   "第一章 心智的层次→成人发展理论": "章节关联",
   "第一章 心智的层次→发展型教练": "章节关联",
   "第一章 心智的层次→第二章 深入分析心智结构": "章节关联",
-  "第二章 深入分析心智结构→全书摘要": "章节关联",
-  "第二章 深入分析心智结构→K卡N卡总表": "章节关联",
   "第二章 深入分析心智结构→规范主导": "章节关联",
   "第二章 深入分析心智结构→自主导向": "章节关联",
   "第二章 深入分析心智结构→内观自变": "章节关联",
   "第二章 深入分析心智结构→成长边际": "章节关联",
-  "第二章 深入分析心智结构→边际提问": "章节关联",
   "第二章 深入分析心智结构→发展型教练": "章节关联",
   "第二章 深入分析心智结构→第一章 心智的层次": "章节关联",
   "第二章 深入分析心智结构→第三章 寻找成长的边际": "章节关联",
-  "第三章 寻找成长的边际→全书摘要": "章节关联",
-  "第三章 寻找成长的边际→K卡N卡总表": "章节关联",
   "第三章 寻找成长的边际→成长边际": "章节关联",
   "第三章 寻找成长的边际→结构与内容": "章节关联",
   "第三章 寻找成长的边际→边际提问": "章节关联",
   "第三章 寻找成长的边际→发展型教练": "章节关联",
-  "第三章 寻找成长的边际→主体 - 客体转换": "章节关联",
   "第三章 寻找成长的边际→第二章 深入分析心智结构": "章节关联",
   "第三章 寻找成长的边际→第四章 扩展式的成长教练": "章节关联",
-  "第四章 扩展式的成长教练→全书摘要": "章节关联",
-  "第四章 扩展式的成长教练→K卡N卡总表": "章节关联",
-  "第四章 扩展式的成长教练→边际提问": "章节关联",
   "第四章 扩展式的成长教练→发展型教练": "章节关联",
   "第四章 扩展式的成长教练→规范主导": "章节关联",
   "第四章 扩展式的成长教练→自主导向": "章节关联",
+  "第四章 扩展式的成长教练→边际提问": "章节关联",
   "第四章 扩展式的成长教练→成长边际": "章节关联",
   "第四章 扩展式的成长教练→第三章 寻找成长的边际": "章节关联",
   "第四章 扩展式的成长教练→第五章 专业发展的蜕变": "章节关联",
-  "第五章 专业发展的蜕变→全书摘要": "章节关联",
-  "第五章 专业发展的蜕变→K卡N卡总表": "章节关联",
   "第五章 专业发展的蜕变→信息性学习": "章节关联",
   "第五章 专业发展的蜕变→转化性学习": "章节关联",
-  "第五章 专业发展的蜕变→发展型教练": "章节关联",
   "第五章 专业发展的蜕变→跨层级空间": "章节关联",
+  "第五章 专业发展的蜕变→发展型教练": "章节关联",
   "第五章 专业发展的蜕变→第四章 扩展式的成长教练": "章节关联",
   "第五章 专业发展的蜕变→第六章 具转化性的心智习惯": "章节关联",
-  "第六章 具转化性的心智习惯→全书摘要": "章节关联",
-  "第六章 具转化性的心智习惯→K卡N卡总表": "章节关联",
   "第六章 具转化性的心智习惯→转化性心智习惯": "章节关联",
   "第六章 具转化性的心智习惯→提出不同问题": "章节关联",
   "第六章 具转化性的心智习惯→接纳多面向观点": "章节关联",
@@ -3343,21 +2334,16 @@ export const LINK_LABELS = {
   "第六章 具转化性的心智习惯→反馈后学习": "章节关联",
   "第六章 具转化性的心智习惯→第五章 专业发展的蜕变": "章节关联",
   "第六章 具转化性的心智习惯→第七章 孕育领导力": "章节关联",
-  "第七章 孕育领导力→全书摘要": "章节关联",
-  "第七章 孕育领导力→K卡N卡总表": "章节关联",
-  "第七章 孕育领导力→领导力脚手架": "章节关联",
   "第七章 孕育领导力→转化性心智习惯": "章节关联",
-  "第七章 孕育领导力→规律性的正式对话": "章节关联",
+  "第七章 孕育领导力→领导力脚手架": "章节关联",
   "第七章 孕育领导力→提出不同问题": "章节关联",
   "第七章 孕育领导力→接纳多面向观点": "章节关联",
   "第七章 孕育领导力→看见系统全貌": "章节关联",
   "第七章 孕育领导力→反馈后学习": "章节关联",
   "第七章 孕育领导力→第六章 具转化性的心智习惯": "章节关联",
   "第七章 孕育领导力→第八章 孕育智慧": "章节关联",
-  "第八章 孕育智慧→全书摘要": "章节关联",
-  "第八章 孕育智慧→K卡N卡总表": "章节关联",
-  "第八章 孕育智慧→众人的任务": "章节关联",
   "第八章 孕育智慧→组织的双重任务": "章节关联",
+  "第八章 孕育智慧→众人的任务": "章节关联",
   "第八章 孕育智慧→工作即成长场": "章节关联",
   "第八章 孕育智慧→发展型会议": "章节关联",
   "第八章 孕育智慧→领导力脚手架": "章节关联",
@@ -3366,242 +2352,126 @@ export const LINK_LABELS = {
   "成人发展理论→自主导向": "概念关联",
   "成人发展理论→内观自变": "概念关联",
   "成人发展理论→结构与内容": "概念关联",
-  "成人发展理论→工作即成长场": "概念关联",
-  "成人发展理论→领导者的意识进化": "概念关联",
-  "成人发展理论→复杂世界中的领导者成长": "概念关联",
-  "成人发展理论→领导力瓶颈不在技能，而在心智复杂度": "概念关联",
   "成人发展理论→成长边际": "概念关联",
-  "成人发展理论→转化性学习": "概念关联",
-  "成人发展理论→全书摘要": "概念关联",
-  "成人发展理论→第一章 心智的层次": "概念关联",
   "主体 - 客体转换→成人发展理论": "概念关联",
   "主体 - 客体转换→发展型教练": "概念关联",
   "主体 - 客体转换→转化性学习": "概念关联",
   "主体 - 客体转换→转化性心智习惯": "概念关联",
   "主体 - 客体转换→第一章 心智的层次": "概念关联",
-  "规范主导→成长边际": "概念关联",
-  "规范主导→发展型教练": "概念关联",
-  "规范主导→领导者的意识进化": "概念关联",
-  "规范主导→复杂世界中的领导者成长": "概念关联",
-  "规范主导→领导力瓶颈不在技能，而在心智复杂度": "概念关联",
   "规范主导→成人发展理论": "概念关联",
   "规范主导→自主导向": "概念关联",
   "规范主导→结构与内容": "概念关联",
+  "规范主导→成长边际": "概念关联",
   "规范主导→边际提问": "概念关联",
-  "规范主导→全书摘要": "概念关联",
-  "规范主导→第二章 深入分析心智结构": "概念关联",
   "自主导向→规范主导": "概念关联",
   "自主导向→内观自变": "概念关联",
   "自主导向→结构与内容": "概念关联",
-  "自主导向→领导者的意识进化": "概念关联",
-  "自主导向→领导力瓶颈不在技能，而在心智复杂度": "概念关联",
   "自主导向→成长边际": "概念关联",
   "自主导向→转化性心智习惯": "概念关联",
-  "自主导向→边际提问": "概念关联",
-  "自主导向→复杂世界中的领导者成长": "概念关联",
-  "自主导向→全书摘要": "概念关联",
-  "自主导向→第二章 深入分析心智结构": "概念关联",
   "内观自变→自主导向": "概念关联",
   "内观自变→工作即成长场": "概念关联",
   "内观自变→发展型会议": "概念关联",
-  "内观自变→领导者的意识进化": "概念关联",
-  "内观自变→复杂世界中的领导者成长": "概念关联",
-  "内观自变→领导力瓶颈不在技能，而在心智复杂度": "概念关联",
-  "内观自变→转化性心智习惯": "概念关联",
   "内观自变→结构与内容": "概念关联",
-  "内观自变→全书摘要": "概念关联",
-  "内观自变→第二章 深入分析心智结构": "概念关联",
+  "内观自变→转化性心智习惯": "概念关联",
+  "内观自变→领导者的意识进化": "概念关联",
   "结构与内容→边际提问": "概念关联",
   "结构与内容→成长边际": "概念关联",
-  "结构与内容→发展型教练": "概念关联",
-  "结构与内容→领导者的意识进化": "概念关联",
-  "结构与内容→复杂世界中的领导者成长": "概念关联",
-  "结构与内容→从结构判断到成长支持：如何找到成长边际": "概念关联",
   "结构与内容→成人发展理论": "概念关联",
   "结构与内容→规范主导": "概念关联",
   "结构与内容→自主导向": "概念关联",
   "结构与内容→内观自变": "概念关联",
-  "结构与内容→全书摘要": "概念关联",
-  "结构与内容→第三章 寻找成长的边际": "概念关联",
-  "成长边际→规范主导": "概念关联",
-  "成长边际→自主导向": "概念关联",
-  "成长边际→领导者的意识进化": "概念关联",
-  "成长边际→复杂世界中的领导者成长": "概念关联",
-  "成长边际→从结构判断到成长支持：如何找到成长边际": "概念关联",
+  "成长边际→成人发展理论": "概念关联",
   "成长边际→结构与内容": "概念关联",
   "成长边际→边际提问": "概念关联",
   "成长边际→发展型教练": "概念关联",
   "成长边际→工作即成长场": "概念关联",
-  "成长边际→成人发展理论": "概念关联",
-  "成长边际→转化性心智习惯": "概念关联",
-  "成长边际→全书摘要": "概念关联",
-  "成长边际→第三章 寻找成长的边际": "概念关联",
   "转化性学习→信息性学习": "概念关联",
   "转化性学习→跨层级空间": "概念关联",
   "转化性学习→转化性心智习惯": "概念关联",
-  "转化性学习→领导者的意识进化": "概念关联",
-  "转化性学习→为什么很多培训回到工作里人却没变": "概念关联",
-  "转化性学习→工作即成长场": "概念关联",
   "转化性学习→成人发展理论": "概念关联",
-  "转化性学习→复杂世界中的领导者成长": "概念关联",
-  "转化性学习→K卡N卡总表": "概念关联",
-  "转化性学习→第五章 专业发展的蜕变": "概念关联",
-  "转化性学习→全书摘要": "概念关联",
+  "转化性学习→工作即成长场": "概念关联",
+  "转化性学习→领导者的意识进化": "概念关联",
   "跨层级空间→转化性学习": "概念关联",
   "跨层级空间→发展型教练": "概念关联",
-  "跨层级空间→为什么很多培训回到工作里人却没变": "概念关联",
   "跨层级空间→发展型会议": "概念关联",
   "跨层级空间→工作即成长场": "概念关联",
   "跨层级空间→领导者的意识进化": "概念关联",
-  "跨层级空间→复杂世界中的领导者成长": "概念关联",
-  "跨层级空间→K卡N卡总表": "概念关联",
-  "跨层级空间→第五章 专业发展的蜕变": "概念关联",
-  "跨层级空间→全书摘要": "概念关联",
   "转化性心智习惯→提出不同问题": "概念关联",
   "转化性心智习惯→接纳多面向观点": "概念关联",
   "转化性心智习惯→看见系统全貌": "概念关联",
   "转化性心智习惯→成长边际": "概念关联",
-  "转化性心智习惯→工作即成长场": "概念关联",
-  "转化性心智习惯→发展型会议": "概念关联",
-  "转化性心智习惯→为什么很多培训回到工作里人却没变": "概念关联",
-  "转化性心智习惯→领导者的意识进化": "概念关联",
   "转化性心智习惯→转化性学习": "概念关联",
-  "转化性心智习惯→反馈后学习": "概念关联",
+  "转化性心智习惯→工作即成长场": "概念关联",
   "转化性心智习惯→结构与内容": "概念关联",
   "转化性心智习惯→内观自变": "概念关联",
-  "转化性心智习惯→复杂世界中的领导者成长": "概念关联",
-  "转化性心智习惯→全书摘要": "概念关联",
-  "转化性心智习惯→第六章 具转化性的心智习惯": "概念关联",
   "工作即成长场→反馈后学习": "概念关联",
   "工作即成长场→发展型会议": "概念关联",
-  "工作即成长场→工作现场如何变成发展容器": "概念关联",
-  "工作即成长场→复杂世界中的领导者成长": "概念关联",
-  "工作即成长场→领导者的意识进化": "概念关联",
-  "工作即成长场→转化性心智习惯": "概念关联",
   "工作即成长场→成长边际": "概念关联",
+  "工作即成长场→转化性心智习惯": "概念关联",
   "工作即成长场→结构与内容": "概念关联",
-  "工作即成长场→全书摘要": "概念关联",
-  "工作即成长场→第八章 孕育智慧": "概念关联",
-  "工作即成长场→视觉表达钩子": "概念关联",
   "信息性学习→转化性学习": "概念关联",
   "信息性学习→成长边际": "概念关联",
-  "信息性学习→为什么很多培训回到工作里人却没变": "概念关联",
-  "信息性学习→领导者的意识进化": "概念关联",
   "信息性学习→跨层级空间": "概念关联",
-  "信息性学习→K卡N卡总表": "概念关联",
-  "信息性学习→第五章 专业发展的蜕变": "概念关联",
-  "信息性学习→全书摘要": "概念关联",
+  "信息性学习→领导者的意识进化": "概念关联",
+  "信息性学习→为什么很多培训回到工作里人却没变": "概念关联",
   "接纳多面向观点→反馈后学习": "概念关联",
   "接纳多面向观点→发展型会议": "概念关联",
   "接纳多面向观点→规律性的正式对话": "概念关联",
-  "接纳多面向观点→复杂世界中的领导者成长": "概念关联",
-  "接纳多面向观点→领导者的意识进化": "概念关联",
   "接纳多面向观点→转化性心智习惯": "概念关联",
   "接纳多面向观点→发展型教练": "概念关联",
-  "接纳多面向观点→K卡N卡总表": "概念关联",
-  "接纳多面向观点→第六章 具转化性的心智习惯": "概念关联",
-  "接纳多面向观点→全书摘要": "概念关联",
+  "接纳多面向观点→复杂世界中的领导者成长": "概念关联",
   "看见系统全貌→工作即成长场": "概念关联",
   "看见系统全貌→结构与内容": "概念关联",
-  "看见系统全貌→复杂世界中的领导者成长": "概念关联",
-  "看见系统全貌→工作现场如何变成发展容器": "概念关联",
-  "看见系统全貌→领导者的意识进化": "概念关联",
   "看见系统全貌→转化性心智习惯": "概念关联",
   "看见系统全貌→发展型会议": "概念关联",
-  "看见系统全貌→K卡N卡总表": "概念关联",
-  "看见系统全貌→第六章 具转化性的心智习惯": "概念关联",
-  "看见系统全貌→全书摘要": "概念关联",
+  "看见系统全貌→复杂世界中的领导者成长": "概念关联",
   "组织的双重任务→工作即成长场": "概念关联",
   "组织的双重任务→领导力脚手架": "概念关联",
-  "组织的双重任务→工作现场如何变成发展容器": "概念关联",
-  "组织的双重任务→领导者的意识进化": "概念关联",
   "组织的双重任务→众人的任务": "概念关联",
-  "组织的双重任务→规律性的正式对话": "概念关联",
   "组织的双重任务→发展型会议": "概念关联",
-  "组织的双重任务→K卡N卡总表": "概念关联",
-  "组织的双重任务→第八章 孕育智慧": "概念关联",
-  "组织的双重任务→全书摘要": "概念关联",
+  "组织的双重任务→工作现场如何变成发展容器": "概念关联",
   "众人的任务→规律性的正式对话": "概念关联",
   "众人的任务→组织的双重任务": "概念关联",
-  "众人的任务→工作现场如何变成发展容器": "概念关联",
-  "众人的任务→领导者的意识进化": "概念关联",
   "众人的任务→工作即成长场": "概念关联",
   "众人的任务→发展型会议": "概念关联",
-  "众人的任务→K卡N卡总表": "概念关联",
-  "众人的任务→第八章 孕育智慧": "概念关联",
-  "众人的任务→全书摘要": "概念关联",
-  "边际提问→成长边际": "方法关联",
+  "众人的任务→工作现场如何变成发展容器": "概念关联",
   "边际提问→结构与内容": "方法关联",
-  "边际提问→从结构判断到成长支持：如何找到成长边际": "方法关联",
+  "边际提问→成长边际": "方法关联",
   "边际提问→发展型教练": "方法关联",
-  "边际提问→领导者的意识进化": "方法关联",
   "边际提问→转化性心智习惯": "方法关联",
-  "边际提问→复杂世界中的领导者成长": "方法关联",
-  "边际提问→K卡N卡总表": "方法关联",
-  "边际提问→第三章 寻找成长的边际": "方法关联",
-  "边际提问→第四章 扩展式的成长教练": "方法关联",
+  "边际提问→领导者的意识进化": "方法关联",
   "发展型教练→成长边际": "方法关联",
-  "发展型教练→规范主导": "方法关联",
-  "发展型教练→自主导向": "方法关联",
-  "发展型教练→内观自变": "方法关联",
   "发展型教练→边际提问": "方法关联",
-  "发展型教练→从结构判断到成长支持：如何找到成长边际": "方法关联",
-  "发展型教练→领导者的意识进化": "方法关联",
   "发展型教练→结构与内容": "方法关联",
   "发展型教练→跨层级空间": "方法关联",
-  "发展型教练→复杂世界中的领导者成长": "方法关联",
-  "发展型教练→K卡N卡总表": "方法关联",
-  "发展型教练→第四章 扩展式的成长教练": "方法关联",
-  "发展型教练→全书摘要": "方法关联",
+  "发展型教练→领导者的意识进化": "方法关联",
   "反馈后学习→发展型会议": "方法关联",
   "反馈后学习→工作即成长场": "方法关联",
-  "反馈后学习→工作现场如何变成发展容器": "方法关联",
-  "反馈后学习→领导者的意识进化": "方法关联",
   "反馈后学习→转化性心智习惯": "方法关联",
+  "反馈后学习→领导者的意识进化": "方法关联",
   "反馈后学习→复杂世界中的领导者成长": "方法关联",
-  "反馈后学习→K卡N卡总表": "方法关联",
-  "反馈后学习→第七章 孕育领导力": "方法关联",
-  "反馈后学习→全书摘要": "方法关联",
-  "发展型会议→工作现场如何变成发展容器": "方法关联",
   "发展型会议→工作即成长场": "方法关联",
   "发展型会议→反馈后学习": "方法关联",
   "发展型会议→跨层级空间": "方法关联",
-  "发展型会议→领导者的意识进化": "方法关联",
   "发展型会议→转化性心智习惯": "方法关联",
-  "发展型会议→复杂世界中的领导者成长": "方法关联",
-  "发展型会议→K卡N卡总表": "方法关联",
-  "发展型会议→第八章 孕育智慧": "方法关联",
-  "发展型会议→全书摘要": "方法关联",
+  "发展型会议→领导者的意识进化": "方法关联",
   "提出不同问题→边际提问": "方法关联",
   "提出不同问题→成长边际": "方法关联",
   "提出不同问题→发展型会议": "方法关联",
-  "提出不同问题→从结构判断到成长支持：如何找到成长边际": "方法关联",
-  "提出不同问题→领导者的意识进化": "方法关联",
   "提出不同问题→转化性心智习惯": "方法关联",
-  "提出不同问题→K卡N卡总表": "方法关联",
-  "提出不同问题→第六章 具转化性的心智习惯": "方法关联",
-  "提出不同问题→全书摘要": "方法关联",
+  "提出不同问题→领导者的意识进化": "方法关联",
+  "提出不同问题→从结构判断到成长支持：如何找到成长边际": "方法关联",
   "领导力脚手架→发展型教练": "方法关联",
   "领导力脚手架→工作即成长场": "方法关联",
   "领导力脚手架→成长边际": "方法关联",
-  "领导力脚手架→从结构判断到成长支持：如何找到成长边际": "方法关联",
-  "领导力脚手架→工作现场如何变成发展容器": "方法关联",
-  "领导力脚手架→领导者的意识进化": "方法关联",
   "领导力脚手架→发展型会议": "方法关联",
-  "领导力脚手架→反馈后学习": "方法关联",
-  "领导力脚手架→K卡N卡总表": "方法关联",
-  "领导力脚手架→第四章 扩展式的成长教练": "方法关联",
-  "领导力脚手架→第八章 孕育智慧": "方法关联",
+  "领导力脚手架→从结构判断到成长支持：如何找到成长边际": "方法关联",
   "规律性的正式对话→发展型会议": "方法关联",
   "规律性的正式对话→成长边际": "方法关联",
   "规律性的正式对话→反馈后学习": "方法关联",
   "规律性的正式对话→工作即成长场": "方法关联",
-  "规律性的正式对话→工作现场如何变成发展容器": "方法关联",
-  "规律性的正式对话→领导者的意识进化": "方法关联",
   "规律性的正式对话→领导力脚手架": "方法关联",
-  "规律性的正式对话→K卡N卡总表": "方法关联",
-  "规律性的正式对话→第八章 孕育智慧": "方法关联",
-  "规律性的正式对话→全书摘要": "方法关联",
+  "规律性的正式对话→工作现场如何变成发展容器": "方法关联",
   "培训做了不少，行为和判断却没真正变→转化性学习": "场景关联",
   "培训做了不少，行为和判断却没真正变→成长边际": "场景关联",
   "培训做了不少，行为和判断却没真正变→工作即成长场": "场景关联",
@@ -3611,6 +2481,9 @@ export const LINK_LABELS = {
   "培训做了不少，行为和判断却没真正变→第三章 寻找成长的边际": "场景关联",
   "培训做了不少，行为和判断却没真正变→第五章 专业发展的蜕变": "场景关联",
   "培训做了不少，行为和判断却没真正变→第八章 孕育智慧": "场景关联",
+  "培训做了不少，行为和判断却没真正变→全书导读": "场景关联",
+  "培训做了不少，行为和判断却没真正变→全书脉络": "场景关联",
+  "培训做了不少，行为和判断却没真正变→领导者的意识进化": "场景关联",
   "同一场会议里，不同人像活在不同宇宙→结构与内容": "场景关联",
   "同一场会议里，不同人像活在不同宇宙→规范主导": "场景关联",
   "同一场会议里，不同人像活在不同宇宙→自主导向": "场景关联",
@@ -3618,29 +2491,47 @@ export const LINK_LABELS = {
   "同一场会议里，不同人像活在不同宇宙→发展型教练": "场景关联",
   "同一场会议里，不同人像活在不同宇宙→第二章 深入分析心智结构": "场景关联",
   "同一场会议里，不同人像活在不同宇宙→第三章 寻找成长的边际": "场景关联",
+  "同一场会议里，不同人像活在不同宇宙→全书导读": "场景关联",
+  "同一场会议里，不同人像活在不同宇宙→全书脉络": "场景关联",
+  "同一场会议里，不同人像活在不同宇宙→领导者的意识进化": "场景关联",
   "领导总想用格局不够一句话解释别人→结构与内容": "场景关联",
   "领导总想用格局不够一句话解释别人→成人发展理论": "场景关联",
   "领导总想用格局不够一句话解释别人→边际提问": "场景关联",
   "领导总想用格局不够一句话解释别人→第一章 心智的层次": "场景关联",
   "领导总想用格局不够一句话解释别人→第三章 寻找成长的边际": "场景关联",
+  "领导总想用格局不够一句话解释别人→全书导读": "场景关联",
+  "领导总想用格局不够一句话解释别人→全书脉络": "场景关联",
+  "领导总想用格局不够一句话解释别人→领导者的意识进化": "场景关联",
   "给了很多反馈，对方却越来越防御→反馈后学习": "场景关联",
   "给了很多反馈，对方却越来越防御→提出不同问题": "场景关联",
   "给了很多反馈，对方却越来越防御→接纳多面向观点": "场景关联",
   "给了很多反馈，对方却越来越防御→第六章 具转化性的心智习惯": "场景关联",
   "给了很多反馈，对方却越来越防御→第七章 孕育领导力": "场景关联",
+  "给了很多反馈，对方却越来越防御→全书导读": "场景关联",
+  "给了很多反馈，对方却越来越防御→全书脉络": "场景关联",
+  "给了很多反馈，对方却越来越防御→领导者的意识进化": "场景关联",
   "明明很努力提问，却总问不出推动成长的问题→成长边际": "场景关联",
   "明明很努力提问，却总问不出推动成长的问题→发展型教练": "场景关联",
   "明明很努力提问，却总问不出推动成长的问题→边际提问": "场景关联",
   "明明很努力提问，却总问不出推动成长的问题→第三章 寻找成长的边际": "场景关联",
   "明明很努力提问，却总问不出推动成长的问题→第四章 扩展式的成长教练": "场景关联",
+  "明明很努力提问，却总问不出推动成长的问题→全书导读": "场景关联",
+  "明明很努力提问，却总问不出推动成长的问题→全书脉络": "场景关联",
+  "明明很努力提问，却总问不出推动成长的问题→领导者的意识进化": "场景关联",
   "一个自主导向的领导者，对规范主导的同事越来越没耐心→规范主导": "场景关联",
   "一个自主导向的领导者，对规范主导的同事越来越没耐心→自主导向": "场景关联",
   "一个自主导向的领导者，对规范主导的同事越来越没耐心→发展型教练": "场景关联",
   "一个自主导向的领导者，对规范主导的同事越来越没耐心→第二章 深入分析心智结构": "场景关联",
+  "一个自主导向的领导者，对规范主导的同事越来越没耐心→全书导读": "场景关联",
+  "一个自主导向的领导者，对规范主导的同事越来越没耐心→全书脉络": "场景关联",
+  "一个自主导向的领导者，对规范主导的同事越来越没耐心→领导者的意识进化": "场景关联",
   "会议耗掉很多时间，但没人觉得自己真正学到了东西→发展型会议": "场景关联",
   "会议耗掉很多时间，但没人觉得自己真正学到了东西→工作即成长场": "场景关联",
   "会议耗掉很多时间，但没人觉得自己真正学到了东西→领导力脚手架": "场景关联",
   "会议耗掉很多时间，但没人觉得自己真正学到了东西→第八章 孕育智慧": "场景关联",
+  "会议耗掉很多时间，但没人觉得自己真正学到了东西→全书导读": "场景关联",
+  "会议耗掉很多时间，但没人觉得自己真正学到了东西→全书脉络": "场景关联",
+  "会议耗掉很多时间，但没人觉得自己真正学到了东西→领导者的意识进化": "场景关联",
   "组织想要更复杂的人才，却仍用旧式控制和单一答案管理他们→工作即成长场": "场景关联",
   "组织想要更复杂的人才，却仍用旧式控制和单一答案管理他们→组织的双重任务": "场景关联",
   "组织想要更复杂的人才，却仍用旧式控制和单一答案管理他们→内观自变": "场景关联",
@@ -3649,8 +2540,11 @@ export const LINK_LABELS = {
   "组织想要更复杂的人才，却仍用旧式控制和单一答案管理他们→发展型会议": "场景关联",
   "组织想要更复杂的人才，却仍用旧式控制和单一答案管理他们→第二章 深入分析心智结构": "场景关联",
   "组织想要更复杂的人才，却仍用旧式控制和单一答案管理他们→第八章 孕育智慧": "场景关联",
-  "Jennifer Garvey Berger（珍妮弗·加维·伯格）→全书摘要": "人物关联",
-  "Jennifer Garvey Berger（珍妮弗·加维·伯格）→全书论证链": "人物关联",
+  "组织想要更复杂的人才，却仍用旧式控制和单一答案管理他们→全书导读": "场景关联",
+  "组织想要更复杂的人才，却仍用旧式控制和单一答案管理他们→全书脉络": "场景关联",
+  "组织想要更复杂的人才，却仍用旧式控制和单一答案管理他们→领导者的意识进化": "场景关联",
+  "Jennifer Garvey Berger（珍妮弗·加维·伯格）→全书导读": "人物关联",
+  "Jennifer Garvey Berger（珍妮弗·加维·伯格）→全书脉络": "人物关联",
   "Jennifer Garvey Berger（珍妮弗·加维·伯格）→领导者的意识进化": "人物关联",
   "Jennifer Garvey Berger（珍妮弗·加维·伯格）→第八章 孕育智慧": "人物关联"
 }
