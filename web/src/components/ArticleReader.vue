@@ -375,6 +375,17 @@ watch(
   margin-bottom: 14px;
 }
 
+.md-content img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin: 18px 0 22px;
+  border-radius: 18px;
+  border: 1px solid var(--border-default);
+  box-shadow: var(--shadow-sm);
+  background: rgba(255, 255, 255, 0.72);
+}
+
 .md-content ul,
 .md-content ol {
   padding-left: 22px;

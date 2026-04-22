@@ -23,10 +23,13 @@ N_NOTES_DIR = REPO_ROOT / "02_collections" / "2_N_concepts" / "N_notes"
 K_THEME_DIR = REPO_ROOT / "02_collections" / "3_K_themes" / "01_by_theme"
 K_BOOK_DIR = REPO_ROOT / "02_collections" / "3_K_themes" / "02_by_book"
 SOURCE_XHS_DIR = REPO_ROOT / "03_outputs" / "04_by_book" / "领导者的意识进化" / "小红书图"
+SOURCE_INFOGRAPHICS_DIR = REPO_ROOT / "03_outputs" / "04_by_book" / "领导者的意识进化" / "infographics"
+SOURCE_SCENES_DIR = REPO_ROOT / "03_outputs" / "04_by_book" / "领导者的意识进化" / "scenes"
 
 VAULT_DIR = PROJECT_ROOT / "vault"
 WEB_VAULT_DIR = PROJECT_ROOT / "web" / "public" / "vault"
 WEB_IMAGE_DIR = PROJECT_ROOT / "web" / "public" / "chapter-images"
+WEB_NOTE_IMAGE_DIR = PROJECT_ROOT / "web" / "public" / "note-images"
 GRAPH_DATA_PATH = PROJECT_ROOT / "web" / "src" / "data" / "graphData.js"
 TODAY = date.today().isoformat()
 BUILD_VERSION = datetime.now().strftime("%Y%m%d%H%M%S")
@@ -78,6 +81,9 @@ METHOD_KEYWORDS = {
 # 如果后续想手调某一章对应哪张图，只要改这个序号列表即可。
 CHAPTER_IMAGE_ORDER = [1, 0, 2, 3, 4, 5, 6, 7]
 OVERVIEW_IMAGE_INDEX = 0
+IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".svg", ".webp"}
+TOPIC_IMAGE_PATTERN = re.compile(r"^\d+_(.+?)_K卡主题信息图(?:_内置预览)?$")
+SCENARIO_IMAGE_PATTERN = re.compile(r"^\d+_(.+)$")
 
 
 @dataclass
@@ -537,7 +543,7 @@ def copy_chapter_images(chapter_ids: list[str]) -> dict[str, str]:
     overview = WEB_IMAGE_DIR / "overview.jpg"
     overview_source_index = min(OVERVIEW_IMAGE_INDEX, len(images) - 1)
     shutil.copy2(images[overview_source_index], overview)
-    for node_id in ["全书摘要", "全书论证链", "K卡N卡总表", "领导者的意识进化"]:
+    for node_id in ["全书摘要", "全书论证链", "K卡N卡总表"]:
         node_images[node_id] = "/chapter-images/overview.jpg"
 
     for chapter_position, chapter_id in enumerate(chapter_ids, start=1):
@@ -549,6 +555,49 @@ def copy_chapter_images(chapter_ids: list[str]) -> dict[str, str]:
         target = WEB_IMAGE_DIR / f"chapter-{chapter_position}.jpg"
         shutil.copy2(images[source_index], target)
         node_images[chapter_id] = f"/chapter-images/chapter-{chapter_position}.jpg"
+
+    return node_images
+
+
+def copy_named_public_image(source: Path, node_id: str) -> str:
+    WEB_NOTE_IMAGE_DIR.mkdir(parents=True, exist_ok=True)
+    target_name = f"{safe_filename(node_id)}{source.suffix.lower()}"
+    target = WEB_NOTE_IMAGE_DIR / target_name
+    shutil.copy2(source, target)
+    return f"/note-images/{target_name}"
+
+
+def sync_topic_and_scenario_images(valid_node_ids: set[str]) -> None:
+    for source_dir, pattern in [
+        (SOURCE_INFOGRAPHICS_DIR, TOPIC_IMAGE_PATTERN),
+        (SOURCE_SCENES_DIR, SCENARIO_IMAGE_PATTERN),
+    ]:
+        if not source_dir.exists():
+            continue
+        for source in sorted(source_dir.iterdir()):
+            if not source.is_file() or source.suffix.lower() not in IMAGE_EXTENSIONS:
+                continue
+            match = pattern.match(source.stem)
+            if not match:
+                continue
+            node_id = match.group(1).strip()
+            if node_id not in valid_node_ids:
+                continue
+            copy_named_public_image(source, node_id)
+
+
+def collect_public_note_images(valid_node_ids: set[str]) -> dict[str, str]:
+    node_images: dict[str, str] = {}
+    if not WEB_NOTE_IMAGE_DIR.exists():
+        return node_images
+
+    for path in sorted(WEB_NOTE_IMAGE_DIR.iterdir()):
+        if not path.is_file() or path.suffix.lower() not in IMAGE_EXTENSIONS:
+            continue
+        node_id = path.stem
+        if node_id not in valid_node_ids:
+            continue
+        node_images[node_id] = f"/note-images/{path.name}"
 
     return node_images
 
@@ -1741,15 +1790,17 @@ def main() -> None:
             hidden_path.unlink()
         file_map.pop(spec.id, None)
 
-    node_images = copy_chapter_images(chapter_ids)
+    public_node_ids = {spec.id for spec in public_specs}
+    sync_topic_and_scenario_images(public_node_ids)
+    node_images = collect_public_note_images(public_node_ids)
+    node_images.update(copy_chapter_images(chapter_ids))
     for node_id in [overview_id, logic_id, content_map_id, "领导者的意识进化"]:
-        node_images[node_id] = "/chapter-images/overview.jpg"
+        node_images.setdefault(node_id, "/chapter-images/overview.jpg")
 
     for node_id in [
         overview_id,
         logic_id,
         content_map_id,
-        "领导者的意识进化",
         "全书摘要",
         "全书论证链",
         "K卡N卡总表",

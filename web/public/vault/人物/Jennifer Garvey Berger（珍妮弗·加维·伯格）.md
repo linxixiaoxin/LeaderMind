@@ -2,7 +2,7 @@
 tags: ["人物"]
 layer: 人物
 aliases: ["Jennifer Garvey Berger", "珍妮弗·加维·伯格"]
-created: 2026-04-21
+created: 2026-04-22
 ---
 
 # Jennifer Garvey Berger（珍妮弗·加维·伯格）
